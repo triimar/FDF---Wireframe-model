@@ -6,18 +6,19 @@
 #    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 13:04:13 by tmarts            #+#    #+#              #
-#    Updated: 2023/01/09 18:06:17 by tmarts           ###   ########.fr        #
+#    Updated: 2023/01/19 19:24:44 by tmarts           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= FDF
+NAME	= FDF.a
 CFLAGS	= -w -Wunreachable-code -Ofast
 LIBMLX	= ./MLX42
 LIBFT	= ./libft
 
 HEADERS	= -I ./include -I $(LIBMLX)/include -I $(LIBFT)
-LIBS	= -lglfw -L /Users/$(USER)/.brew/opt/glfw/lib/ $(LIBMLX)/libmlx42.a $(LIBFT)/libft.a
-SRCS	= $(shell find ./src -iname "*.c")
+LIBS	= -lglfw -L /Users/$(USER)/homebrew/Cellar/glfw/3.3.8/lib/ $(LIBMLX)/libmlx42.a $(LIBFT)/libft.a
+# SRCS	= $(shell find ./src -iname "*.c")
+SRCS	= map_parsing.c
 OBJS	= ${SRCS:.c=.o}
 
 BOLD	= \033[1m
