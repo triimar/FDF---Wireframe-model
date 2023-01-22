@@ -6,12 +6,16 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:45:42 by tmarts            #+#    #+#             */
-/*   Updated: 2023/01/19 19:17:15 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/01/22 21:58:42 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
+
+# ifndef ARRAY_SIZE
+#  define ARRAY_SIZE 100
+# endif
 
 # include <stdlib.h>
 # include <unistd.h>

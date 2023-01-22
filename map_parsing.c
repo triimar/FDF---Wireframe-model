@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 22:02:48 by tmarts            #+#    #+#             */
-/*   Updated: 2023/01/19 19:40:47 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/01/22 21:58:32 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,55 +34,147 @@
 // 	int	y_max;
 // }	t_coords;
 
+// int	y_maxval(int fd)
+// {
+// 	int		y;
+// 	char	*str;
 
-int	map_x_y_z(char *map_name)
+// 	str = get_next_line(fd);
+// 	y = 0;
+// 	while (str)
+// 	{
+// 		y++;
+// 		str = get_next_line(fd);
+// 	}
+// 	return (y);
+// }
+
+char	*ft_free_double_p(char **p_p, int len)
+{
+	len--;
+	while (len >= 0 && p_p[len])
+	{
+		free(p_p[len]);
+		len--;
+	}
+	free (p_p);
+	return (NULL);
+}
+
+int	**ft_map_resize(int **map, int y)
+{
+	int	**new_map;
+
+	new_map = (int *)malloc((y + ARRAY_SIZE) * sizeof(int *));
+	if (!new_map)
+		return (free(map), NULL);
+	ft_memcpy(new_map, map, (y * (int) sizeof(int *)));
+	free(map);
+	return (new_map);
+}
+
+char	*ft_free_all(int **map, int y, char **split_str, int x, char *str)
+{
+	if (map)
+		ft_free_double_p(map, y);
+	if (split_str)
+		ft_free_double_p(split_str, y);
+	if (str)
+		free(str);
+	return (NULL);
+}
+
+int	**map_x_y_z(char *map_name)
 {
 	int		fd;
-	int		x;
 	int		j;
 	char	*str;
 	char	**split_str;
-	int		*z_val;
-	int 	i;
+	int		y_coeff;
+	int		x;
+	int 	y;
+	int		**map;
 
-	i = 0;
-	// y_max = 0;
+
+	y = 0;
+	x = 0;
 	fd = open(map_name, O_RDONLY);
 	str = get_next_line(fd);
 	if (!str)
 		return (0);
-	printf("[%s]\n", str);
-	printf("_________________________________________\n");
-	if (str)
+	map = (int *)malloc(ARRAY_SIZE * sizeof(int *));
+	if (!map)
+		return (free(str), NULL);
+	y_coeff = 1;
+	while (str)
 	{
-		x = 0;
 		j = 0;
 		split_str = ft_split(str, ' ');
+		if (!split_str)
+			return (ft_free_all(map, (y - 1), split_str, x, str));
 		free(str);
-		while (split_str[x] != NULL)
+		if (x == 0)
 		{
-			printf("[%s]\n", split_str[x]);
-			x++;
-		}	
-		printf(">>>>>[%d]\n", x);
-		z_val = (int *)malloc(sizeof(int) * x);
-		if (!z_val)
-			return (0);
+			while (split_str[x] != NULL)
+				x++;
+		}
+		if (y >= ARRAY_SIZE * y_coeff)
+		{
+			map = ft_map_resize(map, y);
+			if (!map)
+				return (ft_free_double_p(split_str, x));
+			y_coeff++;
+		}
+		map[y] = (int *)malloc(sizeof(int) * x);
+		if (!(map[y]))
+			return (ft_free_all(map, y, split_str, x, str));
 		while (j < x)
 		{
-			z_val[j] = ft_atoi(split_str[j]);
+			map[y][j] = ft_atoi(split_str[j]);
 			j++;
 		}
-		printf("_________________________________________\n");
-		while (i < x)
-		{
-			printf("[%d]\n", z_val[i]);
-			i++;
-		}	
+		ft_free_double_p(split_str, x);
+		str = get_next_line(fd);
+		y++;
 	}
+	// int i = 0;
+	// int printing = 0;
+	// while (i < y)
+	// {
+	// 	printing = 0;
+	// 	while (printing < x)
+	// 	{
+	// 		printf("[%d]", map[i][printing]);
+	// 		printing++;
+	// 	}
+	// 	printf("\n");
+	// 	i++;
+	// 	printf("%d\n", i);
+	// 	printf(">>>>>>X[%d]\n", x);
+	// 	printf(">>>>>>Y[%d]\n", y);
+	// }
+	ft_free_double_p(map, y);
+	return (NULL);
 }
 
 int	main(void)
 {
-	map_x_y_z("42.fdf");
+	 map_x_y_z("test_maps/20-60.fdf");
+	 system("leaks FDF.a");
 }
+
+	// printf(">>>>>>[%d]\n", y);
+	// int i = 0;
+	// int printing = 0;
+	// while (i < y)
+	// {
+	// 	printing = 0;
+	// 	while (printing < x)
+	// 	{
+	// 		printf("[%d]", map[i][printing]);
+	// 		printing++;
+	// 	}
+	// 	printf("\n");
+	// 	i++;
+	// 	printf("%d\n", i);
+	// }
