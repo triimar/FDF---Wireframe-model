@@ -6,12 +6,12 @@
 #    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 13:04:13 by tmarts            #+#    #+#              #
-#    Updated: 2023/01/19 19:24:44 by tmarts           ###   ########.fr        #
+#    Updated: 2023/01/23 16:56:26 by tmarts           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= FDF.a
-CFLAGS	= -w -Wunreachable-code -Ofast
+NAME	= FDF
+CFLAGS	= -w -Wunreachable-code -Ofast 
 LIBMLX	= ./MLX42
 LIBFT	= ./libft
 

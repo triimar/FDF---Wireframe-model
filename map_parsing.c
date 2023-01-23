@@ -6,56 +6,33 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 22:02:48 by tmarts            #+#    #+#             */
-/*   Updated: 2023/01/22 21:58:32 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/01/23 18:35:05 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-// int get_y_axis(fd)
-// {
-// 	int		y_max;
-// 	char	*str;
-
-// 	str = get_next_line(fd);
-// 	if (!str)
-// 		return (0);
-// 	y_max = 1;
-// 	while (str)
-// 	{
-// 		free(str);
-// 		y_max++;
-// 		str = get_next_line(fd);
-// 	}
-// }
-// typedef struct s_coords {
-// 	int	**mtrx;
-// 	int	x_max;
-// 	int	y_max;
-// }	t_coords;
-
-// int	y_maxval(int fd)
-// {
-// 	int		y;
-// 	char	*str;
-
-// 	str = get_next_line(fd);
-// 	y = 0;
-// 	while (str)
-// 	{
-// 		y++;
-// 		str = get_next_line(fd);
-// 	}
-// 	return (y);
-// }
-
-char	*ft_free_double_p(char **p_p, int len)
+char	*ft_free_double_p(int **p_p, int len)
 {
 	len--;
 	while (len >= 0 && p_p[len])
 	{
 		free(p_p[len]);
 		len--;
+	}
+	free (p_p);
+	return (NULL);
+}
+
+static char	*ft_free_split(char **p_p)
+{
+	int	i;
+
+	i = 0;
+	while (p_p[i])
+	{
+		free(p_p[i]);
+		i++;
 	}
 	free (p_p);
 	return (NULL);
@@ -73,108 +50,90 @@ int	**ft_map_resize(int **map, int y)
 	return (new_map);
 }
 
-char	*ft_free_all(int **map, int y, char **split_str, int x, char *str)
+char	*ft_free_all(t_3d *s_3d, char **split_str, char *str)
 {
-	if (map)
-		ft_free_double_p(map, y);
+	// if (s_3d->mtrx)
+	// 	ft_free_double_p(&s_3d->mtrx, s_3d->y_max);
 	if (split_str)
-		ft_free_double_p(split_str, y);
-	if (str)
-		free(str);
+		ft_free_split(split_str);
+	// if (str)
+	// 	free(str);
 	return (NULL);
 }
 
-int	**map_x_y_z(char *map_name)
+int	**map_x_y_z(char *map_name, t_3d *s_3d)
 {
 	int		fd;
 	int		j;
 	char	*str;
-	char	**split_str;
+	char	**splits;
 	int		y_coeff;
-	int		x;
-	int 	y;
-	int		**map;
 
-
-	y = 0;
-	x = 0;
+	s_3d->y_max = 0;
+	s_3d->x_max = 0;
 	fd = open(map_name, O_RDONLY);
 	str = get_next_line(fd);
 	if (!str)
 		return (0);
-	map = (int *)malloc(ARRAY_SIZE * sizeof(int *));
-	if (!map)
+	s_3d->mtrx = (int *)malloc(ARRAY_SIZE * sizeof(int *));
+	if (!s_3d->mtrx)
 		return (free(str), NULL);
 	y_coeff = 1;
 	while (str)
 	{
 		j = 0;
-		split_str = ft_split(str, ' ');
-		if (!split_str)
-			return (ft_free_all(map, (y - 1), split_str, x, str));
+		splits = ft_split(str, ' ');
+		if (!splits)
+			return (ft_free_all(&s_3d, splits, str));
 		free(str);
-		if (x == 0)
+		if (s_3d->x_max == 0)
 		{
-			while (split_str[x] != NULL)
-				x++;
+			while (splits[s_3d->x_max] != 0 && splits[s_3d->x_max][0] != '\n')
+				s_3d->x_max++;
 		}
-		if (y >= ARRAY_SIZE * y_coeff)
+		if (s_3d->y_max >= ARRAY_SIZE * y_coeff)
 		{
-			map = ft_map_resize(map, y);
-			if (!map)
-				return (ft_free_double_p(split_str, x));
+			s_3d->mtrx = ft_map_resize(s_3d->mtrx, s_3d->y_max);
+			if (!s_3d->mtrx)
+				return (ft_free_split(splits));
 			y_coeff++;
 		}
-		map[y] = (int *)malloc(sizeof(int) * x);
-		if (!(map[y]))
-			return (ft_free_all(map, y, split_str, x, str));
-		while (j < x)
+		s_3d->mtrx[s_3d->y_max] = (int *)malloc(sizeof(int) * s_3d->x_max);
+		if (!(s_3d->mtrx[s_3d->y_max]))
+			return (ft_free_all(&s_3d, splits, str));
+		while (j < s_3d->x_max)
 		{
-			map[y][j] = ft_atoi(split_str[j]);
+			s_3d->mtrx[s_3d->y_max][j] = ft_atoi(splits[j]);
 			j++;
 		}
-		ft_free_double_p(split_str, x);
+		ft_free_split(splits);
 		str = get_next_line(fd);
-		y++;
+		s_3d->y_max++;
 	}
-	// int i = 0;
-	// int printing = 0;
-	// while (i < y)
-	// {
-	// 	printing = 0;
-	// 	while (printing < x)
-	// 	{
-	// 		printf("[%d]", map[i][printing]);
-	// 		printing++;
-	// 	}
-	// 	printf("\n");
-	// 	i++;
-	// 	printf("%d\n", i);
-	// 	printf(">>>>>>X[%d]\n", x);
-	// 	printf(">>>>>>Y[%d]\n", y);
-	// }
-	ft_free_double_p(map, y);
+	int i = 0;
+	int printing = 0;
+	while (i < s_3d->y_max)
+	{
+		printing = 0;
+		while (printing < s_3d->x_max)
+		{
+			printf("[%d]", s_3d->mtrx[i][printing]);
+			printing++;
+		}
+		printf("\n");
+		i++;
+		printf("%d\n", i);
+	}
+	printf(">>>>>>X[%d]\n", s_3d->x_max);
+	printf(">>>>>>Y[%d]\n", s_3d->y_max);
+	ft_free_double_p(s_3d->mtrx, s_3d->y_max);
 	return (NULL);
 }
 
 int	main(void)
 {
-	 map_x_y_z("test_maps/20-60.fdf");
-	 system("leaks FDF.a");
-}
+	t_3d	s_3d;
 
-	// printf(">>>>>>[%d]\n", y);
-	// int i = 0;
-	// int printing = 0;
-	// while (i < y)
-	// {
-	// 	printing = 0;
-	// 	while (printing < x)
-	// 	{
-	// 		printf("[%d]", map[i][printing]);
-	// 		printing++;
-	// 	}
-	// 	printf("\n");
-	// 	i++;
-	// 	printf("%d\n", i);
-	// }
+	map_x_y_z("test_maps/t2.fdf", &s_3d);
+	system("leaks FDF");
+}
