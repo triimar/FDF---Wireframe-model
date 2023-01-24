@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 22:02:48 by tmarts            #+#    #+#             */
-/*   Updated: 2023/01/23 18:35:05 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/01/24 19:08:58 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,16 @@ int	**ft_map_resize(int **map, int y)
 
 char	*ft_free_all(t_3d *s_3d, char **split_str, char *str)
 {
-	// if (s_3d->mtrx)
-	// 	ft_free_double_p(&s_3d->mtrx, s_3d->y_max);
+	if (s_3d->mtrx)
+		ft_free_double_p(&s_3d->mtrx, s_3d->y_max);
 	if (split_str)
 		ft_free_split(split_str);
-	// if (str)
-	// 	free(str);
+	if (str)
+		free(str);
 	return (NULL);
 }
 
-int	**map_x_y_z(char *map_name, t_3d *s_3d)
+t_3d	*map_x_y_z(char *map_name, t_3d *s_3d)
 {
 	int		fd;
 	int		j;
@@ -110,30 +110,31 @@ int	**map_x_y_z(char *map_name, t_3d *s_3d)
 		str = get_next_line(fd);
 		s_3d->y_max++;
 	}
-	int i = 0;
-	int printing = 0;
-	while (i < s_3d->y_max)
-	{
-		printing = 0;
-		while (printing < s_3d->x_max)
-		{
-			printf("[%d]", s_3d->mtrx[i][printing]);
-			printing++;
-		}
-		printf("\n");
-		i++;
-		printf("%d\n", i);
-	}
-	printf(">>>>>>X[%d]\n", s_3d->x_max);
-	printf(">>>>>>Y[%d]\n", s_3d->y_max);
-	ft_free_double_p(s_3d->mtrx, s_3d->y_max);
-	return (NULL);
+	return (s_3d->mtrx);
 }
 
-int	main(void)
-{
-	t_3d	s_3d;
+// int	main(void)
+// {
+// 	t_3d	s_3d;
+// 	int		**map;
+// 	int		i;
+// 	int		printing;
 
-	map_x_y_z("test_maps/t2.fdf", &s_3d);
-	system("leaks FDF");
-}
+// 	map_x_y_z("test_maps/42.fdf", &s_3d);
+// 	while (i < s_3d.y_max)
+// 	{
+// 		printing = 0;
+// 		while (printing < s_3d.x_max)
+// 		{
+// 			printf("[%d]", s_3d.mtrx[i][printing]);
+// 			printing++;
+// 		}
+// 		printf("\n");
+// 		i++;
+// 		printf("%d\n", i);
+// 	}
+// 	printf(">>>>>>X[%d]\n", s_3d.x_max);
+// 	printf(">>>>>>Y[%d]\n", s_3d.y_max);
+// 	system("leaks FDF");
+// 	ft_free_double_p(s_3d.mtrx, s_3d.y_max);
+// }

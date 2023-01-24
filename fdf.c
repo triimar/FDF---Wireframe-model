@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 18:35:08 by tmarts            #+#    #+#             */
-/*   Updated: 2023/01/09 16:13:43 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/01/09 18:37:11 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,4 +144,3 @@ int	main (void)
 	mlx_delete_image(mlx_ptr, img);
 	mlx_terminate(mlx_ptr);
 	return (EXIT_SUCCESS);
-}
