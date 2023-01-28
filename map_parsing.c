@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 22:02:48 by tmarts            #+#    #+#             */
-/*   Updated: 2023/01/24 19:08:58 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/01/28 21:55:03 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,12 +98,12 @@ t_3d	*map_x_y_z(char *map_name, t_3d *s_3d)
 				return (ft_free_split(splits));
 			y_coeff++;
 		}
-		s_3d->mtrx[s_3d->y_max] = (int *)malloc(sizeof(int) * s_3d->x_max);
+		s_3d->mtrx[s_3d->y_max] = malloc(sizeof(double) * s_3d->x_max);
 		if (!(s_3d->mtrx[s_3d->y_max]))
 			return (ft_free_all(&s_3d, splits, str));
 		while (j < s_3d->x_max)
 		{
-			s_3d->mtrx[s_3d->y_max][j] = ft_atoi(splits[j]);
+			s_3d->mtrx[s_3d->y_max][j] = (double)ft_atoi(splits[j]);
 			j++;
 		}
 		ft_free_split(splits);
@@ -112,29 +112,3 @@ t_3d	*map_x_y_z(char *map_name, t_3d *s_3d)
 	}
 	return (s_3d->mtrx);
 }
-
-// int	main(void)
-// {
-// 	t_3d	s_3d;
-// 	int		**map;
-// 	int		i;
-// 	int		printing;
-
-// 	map_x_y_z("test_maps/42.fdf", &s_3d);
-// 	while (i < s_3d.y_max)
-// 	{
-// 		printing = 0;
-// 		while (printing < s_3d.x_max)
-// 		{
-// 			printf("[%d]", s_3d.mtrx[i][printing]);
-// 			printing++;
-// 		}
-// 		printf("\n");
-// 		i++;
-// 		printf("%d\n", i);
-// 	}
-// 	printf(">>>>>>X[%d]\n", s_3d.x_max);
-// 	printf(">>>>>>Y[%d]\n", s_3d.y_max);
-// 	system("leaks FDF");
-// 	ft_free_double_p(s_3d.mtrx, s_3d.y_max);
-// }

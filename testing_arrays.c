@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 18:41:43 by tmarts            #+#    #+#             */
-/*   Updated: 2023/01/24 19:36:12 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/01/28 21:49:04 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,24 @@
 
 /*converting 3d cordinares to 2d cordinates 
 with (0, 0, 0) sprcified as origin*/
-int	x_fla(int x, int y, int z, int x_origin)
+int	x_fla(double x, double y, double z)
 {
-	int	x_cart;
-	int	x_isom;
+	double	x_cart;
+	double	x_isom;
 
-	x_cart = (x - y) * cos(M_PI / 6);
-	x_isom = x_cart + x_origin;
-	return (x_isom);
+	x_cart = SCALE * (x - y) * cos(M_PI / 6);
+	x_isom = x_cart + (WIDTH / 2);
+	return (round(x_isom));
 }
 
-int	y_fla(int x, int y, int z, int y_origin)
+int	y_fla(double x, double y, double z)
 {
-	int	y_cart;
-	int	y_isom;
+	double	y_cart;
+	double	y_isom;
 
-	y_cart = (x + y) * sin(M_PI / 6) - x;
-	y_isom = y_cart + y_origin;
-	return (y_isom);
+	y_cart = SCALE * (x + y) * sin(M_PI / 6) - (SCALE * z);
+	y_isom = y_cart + (HEIGHT / 2);
+	return (round(y_isom));
 }
 
 /*places pixels to draw a line, 
@@ -94,96 +94,97 @@ void	draw_line_high(mlx_image_t *img, int x1, int y1, int x2, int y2)
 		else
 		{
 			p = p + 2 * dx - 2 * dy;
+			x1 = x1 + x_step;
 		}
 	}
 }
 
-void	draw_line(mlx_image_t *img, int x1, int y1, int x2, int y2)
+// void	draw_line(mlx_image_t *img, int x1, int y1, int x2, int y2)
+// {
+// 	if (abs(y2 - y1) < abs(x2 - x1))
+// 	{
+// 		if (x1 > x2)
+// 			draw_line_low(img, x2, y2, x1, y1);
+// 		else
+// 			draw_line_low(img, x1, y1, x2, y2);
+// 	}
+// 	else
+// 	{
+// 		if (y1 > y2)
+// 			draw_line_high(img, x2, y2, x1, y1);
+// 		else
+// 			draw_line_high(img, x1, y1, x2, y2);
+// 	}
+// }
+
+void	draw_line(mlx_image_t *img, t_isom *s_isom)
 {
-	if (abs(y2 - y1) < abs(x2 - x1))
+	if (abs(s_isom->y2 - s_isom->y1) < abs(s_isom->x2 - s_isom->x1))
 	{
-		if (x1 > x2)
-			draw_line_low(img, x2, y2, x1, y1);
+		if (s_isom->x1 > s_isom->x2)
+			draw_line_low(img, s_isom->x2, s_isom->y2, s_isom->x1, s_isom->y1);
 		else
-			draw_line_low(img, x1, y1, x2, y2);
+			draw_line_low(img, s_isom->x1, s_isom->y1, s_isom->x2, s_isom->y2);
 	}
 	else
 	{
-		if (y1 > y2)
-			draw_line_high(img, x2, y2, x1, y1);
+		if (s_isom->y1 > s_isom->y2)
+			draw_line_high(img, s_isom->x2, s_isom->y2, s_isom->x1, s_isom->y1);
 		else
-			draw_line_high(img, x1, y1, x2, y2);
+			draw_line_high(img, s_isom->x1, s_isom->y1, s_isom->x2, s_isom->y2);
 	}
 }
-
-
-int	main (void)
+int	main (int argc, char **argv)
 {
 	t_3d		s_3d;
+	t_isom		s_isom;
 	void		*mlx_ptr;
 	mlx_image_t	*img;
-	int			**map;
-	int			x_o = 400/2;
-	int			y_o = 800-400;
-	int			x_current;
-	int			y_current;
+	int			x_cur;
+	int			y_cur;
 
-	x_current = 1;
-	y_current = 0;
-	mlx_ptr = mlx_init(400, 800, "mlx 42", true);
+	y_cur = 0;
+	mlx_ptr = mlx_init(1540, 1028, "test", true);
 	if (!mlx_ptr)
 		exit(EXIT_FAILURE);
-	img = mlx_new_image(mlx_ptr, 400, 800);
+	img = mlx_new_image(mlx_ptr, 1540, 1028);
 	if (!img)
 		exit(EXIT_FAILURE);
 	if (mlx_image_to_window(mlx_ptr, img, 0, 0) < 0)
 		exit(EXIT_FAILURE);
-	map = map_x_y_z("test_maps/42.fdf", &s_3d);
-	// while (x_current < s_3d.x_max)
-	// {
-		draw_line(img, x_fla(x_current-1, y_current, map[y_current][x_current-1], x_o), y_fla(x_current-1, y_current, map[y_current][x_current-1], y_o), x_fla(x_current, y_current, map[y_current][x_current], x_o), y_fla(x_current, y_current, map[y_current][x_current], y_o));
-	// 	x_current++;
-	// }
+	map_x_y_z(argv[1], &s_3d);
+	while (y_cur < s_3d.y_max)
+	{
+		x_cur = 1;
+		while (x_cur < s_3d.x_max)
+		{
+			s_isom.x1 = x_fla(x_cur - 1, y_cur, s_3d.mtrx[y_cur][x_cur - 1]);
+			s_isom.y1 = y_fla(x_cur - 1, y_cur, s_3d.mtrx[y_cur][x_cur - 1]);
+			s_isom.x2 = x_fla(x_cur, y_cur, s_3d.mtrx[y_cur][x_cur]);
+			s_isom.y2 = y_fla(x_cur, y_cur, s_3d.mtrx[y_cur][x_cur]);
+			draw_line(img, &s_isom);
+			x_cur++;
+		}
+		y_cur++;
+	}
+	x_cur = 0;
+	while (x_cur < s_3d.x_max)
+	{
+		y_cur = 1;
+		while (y_cur < s_3d.y_max)
+		{
+			s_isom.x1 = x_fla(x_cur, y_cur - 1, s_3d.mtrx[y_cur - 1][x_cur]);
+			s_isom.y1 = y_fla(x_cur, y_cur - 1, s_3d.mtrx[y_cur - 1][x_cur]);
+			s_isom.x2 = x_fla(x_cur, y_cur, s_3d.mtrx[y_cur][x_cur]);
+			s_isom.y2 = y_fla(x_cur, y_cur, s_3d.mtrx[y_cur][x_cur]);
+			draw_line(img, &s_isom);
+			y_cur++;
+		}
+		x_cur++;
+	}
+	mlx_loop(mlx_ptr);
 	mlx_delete_image(mlx_ptr, img);
 	mlx_terminate(mlx_ptr);
+	system("leaks fdf");
 	return (EXIT_SUCCESS);
 }
-
-// int	main (void)
-// {
-// 	void		*mlx_ptr;
-// 	mlx_image_t	*img;	
-// 	int			x_o = 400/2;
-// 	int			y_o = 800-400;
-// 	// int			point_1[3]={10, 10, 0};
-// 	// int			point_2[3]={10, 50, 0};
-// 	// int			point_3[3]={50, 50, 0};
-// 	// int			point_4[3]={50, 10, 0};
-	
-
-// 	mlx_ptr = mlx_init(400, 800, "mlx 42", true);
-// 	if (!mlx_ptr)
-// 		exit(EXIT_FAILURE);
-// 	img = mlx_new_image(mlx_ptr, 400, 800);
-// 	if (!img)
-// 		exit(EXIT_FAILURE);
-// 	if (mlx_image_to_window(mlx_ptr, img, 0, 0) < 0)
-// 		exit(EXIT_FAILURE);
-	
-	
-// 	draw_line(img, x_fla(point_1, x_o), y_fla(point_1, y_o), x_fla(point_2, x_o), y_fla(point_2, y_o));
-// 	draw_line(img, x_fla(point_3, x_o), y_fla(point_3, y_o), x_fla(point_4, x_o), y_fla(point_4, y_o));
-// 	draw_line(img, x_fla(point_1, x_o), y_fla(point_1, y_o), x_fla(point_4, x_o), y_fla(point_4, y_o));
-// 	draw_line(img, x_fla(point_2, x_o), y_fla(point_2, y_o), x_fla(point_3, x_o), y_fla(point_3, y_o));
-// 	// draw_line(img, x_fla(0, 0, 100, x_o), y_fla(0, 0, 100, y_o), x_o, y_o);
-// 	// draw_line(img, x_fla(0, 100, 0, x_o), y_fla(0, 100, 0, y_o), x_o, y_o);
-// 	// draw_line(img, x_fla(10, 100, 0, x_o), y_fla(10, 100, 0, y_o), x_fla(10, 0, 0, x_o), y_fla(10, 0, 0, y_o));
-// 	// draw_line(img, x_fla(20, 100, 0, x_o), y_fla(20, 100, 0, y_o), x_fla(20, 0, 0, x_o), y_fla(20, 0, 0, y_o));
-// 	// draw_line(img, x_fla(100, 0, 0, x_o), y_fla(100, 0, 0, y_o), x_o, y_o);
-// 	// draw_line(img, x_fla(100, 10, 0, x_o), y_fla(100, 10, 0, y_o), x_fla(0, 10, 0, x_o), y_fla(0, 10, 0, y_o));
-// 	// draw_line(img, x_fla(100, 20, 0, x_o), y_fla(100, 20, 0, y_o), x_fla(0, 20, 0, x_o), y_fla(0, 20, 0, y_o));
-// 	mlx_loop(mlx_ptr);
-// 	mlx_delete_image(mlx_ptr, img);
-// 	mlx_terminate(mlx_ptr);
-// 	return (EXIT_SUCCESS);
-// }
