@@ -6,11 +6,11 @@
 #    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 13:04:13 by tmarts            #+#    #+#              #
-#    Updated: 2023/01/23 16:56:26 by tmarts           ###   ########.fr        #
+#    Updated: 2023/01/30 21:30:58 by tmarts           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= FDF
+NAME	= fdf
 CFLAGS	= -w -Wunreachable-code -Ofast 
 LIBMLX	= ./MLX42
 LIBFT	= ./libft
@@ -18,7 +18,9 @@ LIBFT	= ./libft
 HEADERS	= -I ./include -I $(LIBMLX)/include -I $(LIBFT)
 LIBS	= -lglfw -L /Users/$(USER)/homebrew/Cellar/glfw/3.3.8/lib/ $(LIBMLX)/libmlx42.a $(LIBFT)/libft.a
 # SRCS	= $(shell find ./src -iname "*.c")
-SRCS	= map_parsing.c
+SRCS	= map.c \
+hooks.c \
+draw.c
 OBJS	= ${SRCS:.c=.o}
 
 BOLD	= \033[1m
@@ -50,14 +52,12 @@ $(NAME): $(OBJS)
 
 clean:
 	@rm -f $(OBJS)
-	@$(MAKE) -C $(LIBFT) clean
-	@$(MAKE) -C $(LIBMLX) clean
-
-fclean: clean
-	@rm -f $(NAME)
 	@$(MAKE) -C $(LIBFT) fclean
 	@$(MAKE) -C $(LIBMLX) fclean
 
-re: clean all
+fclean: clean
+	@rm -f $(NAME)
+
+re: fclean all
 
 .PHONY: all, clean, fclean, re, libmlx, libft

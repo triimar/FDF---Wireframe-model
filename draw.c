@@ -1,20 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   testing_arrays.c                                   :+:      :+:    :+:   */
+/*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 18:41:43 by tmarts            #+#    #+#             */
-/*   Updated: 2023/01/28 21:49:04 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/01/30 21:02:39 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
-
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
 #include "fdf.h"
 
 /*converting 3d cordinares to 2d cordinates 
@@ -99,21 +94,40 @@ void	draw_line_high(mlx_image_t *img, int x1, int y1, int x2, int y2)
 	}
 }
 
-// void	draw_line(mlx_image_t *img, int x1, int y1, int x2, int y2)
+// void	draw_grid(t_3d *s_3d, t_isom *s_isom, t_displ *s_displ)
 // {
-// 	if (abs(y2 - y1) < abs(x2 - x1))
+// 	int		x_cur;
+// 	int		y_cur;
+
+// 	y_cur = 0;
+// 	while (y_cur < s_3d->y_max)
 // 	{
-// 		if (x1 > x2)
-// 			draw_line_low(img, x2, y2, x1, y1);
-// 		else
-// 			draw_line_low(img, x1, y1, x2, y2);
+// 		x_cur = 1;
+// 		while (x_cur < s_3d->x_max)
+// 		{
+// 			s_isom->x1 = x_fla(x_cur - 1, y_cur, s_3d->mtrx[y_cur][x_cur - 1]);
+// 			s_isom->y1 = y_fla(x_cur - 1, y_cur, s_3d->mtrx[y_cur][x_cur - 1]);
+// 			s_isom->x2 = x_fla(x_cur, y_cur, s_3d->mtrx[y_cur][x_cur]);
+// 			s_isom->y2 = y_fla(x_cur, y_cur, s_3d->mtrx[y_cur][x_cur]);
+// 			draw_line(s_displ->img, s_isom);
+// 			x_cur++;
+// 		}
+// 		y_cur++;
 // 	}
-// 	else
+// 	x_cur = 0;
+// 	while (x_cur < s_3d->x_max)
 // 	{
-// 		if (y1 > y2)
-// 			draw_line_high(img, x2, y2, x1, y1);
-// 		else
-// 			draw_line_high(img, x1, y1, x2, y2);
+// 		y_cur = 1;
+// 		while (y_cur < s_3d->y_max)
+// 		{
+// 			s_isom->x1 = x_fla(x_cur, y_cur - 1, s_3d->mtrx[y_cur - 1][x_cur]);
+// 			s_isom->y1 = y_fla(x_cur, y_cur - 1, s_3d->mtrx[y_cur - 1][x_cur]);
+// 			s_isom->x2 = x_fla(x_cur, y_cur, s_3d->mtrx[y_cur][x_cur]);
+// 			s_isom->y2 = y_fla(x_cur, y_cur, s_3d->mtrx[y_cur][x_cur]);
+// 			draw_line(s_displ->img, s_isom);
+// 			y_cur++;
+// 		}
+// 		x_cur++;
 // 	}
 // }
 
@@ -134,23 +148,48 @@ void	draw_line(mlx_image_t *img, t_isom *s_isom)
 			draw_line_high(img, s_isom->x1, s_isom->y1, s_isom->x2, s_isom->y2);
 	}
 }
-int	main (int argc, char **argv)
+
+// int	main(int argc, char **argv)
+// {
+// 	t_3d		s_3d;
+// 	t_displ		s_displ;
+// 	t_isom		s_isom;
+
+// 	s_displ.window = mlx_init(WIDTH, HEIGHT, "test", true);
+// 	if (!s_displ.window)
+// 		exit(EXIT_FAILURE);
+// 	s_displ.img = mlx_new_image(s_displ.window, WIDTH, HEIGHT);
+// 	if (!s_displ.img)
+// 		exit(EXIT_FAILURE);
+// 	if (mlx_image_to_window(s_displ.window, s_displ.img, 0, 0) < 0)
+// 		exit(EXIT_FAILURE);
+// 	map_x_y_z(argv[1], &s_3d);
+// 	draw_grid(&s_3d, &s_isom, &s_displ);
+// 	mlx_key_hook(s_displ.window, &esc_close, &s_displ);
+// 	mlx_loop(s_displ.window);
+// 	mlx_delete_image(s_displ.window, s_displ.img);
+// 	mlx_terminate(s_displ.window);
+// 	ft_free_double_p(s_3d.mtrx, s_3d.y_max);
+// 	system("leaks fdf");
+// 	return (EXIT_SUCCESS);
+// }
+
+int	main(int argc, char **argv)
 {
 	t_3d		s_3d;
 	t_isom		s_isom;
-	void		*mlx_ptr;
-	mlx_image_t	*img;
+	t_displ		s_displ;
 	int			x_cur;
 	int			y_cur;
 
 	y_cur = 0;
-	mlx_ptr = mlx_init(1540, 1028, "test", true);
-	if (!mlx_ptr)
+	s_displ.window = mlx_init(WIDTH, HEIGHT, "test", true);
+	if (!s_displ.window)
 		exit(EXIT_FAILURE);
-	img = mlx_new_image(mlx_ptr, 1540, 1028);
-	if (!img)
+	s_displ.img = mlx_new_image(s_displ.window, WIDTH, HEIGHT);
+	if (!s_displ.img)
 		exit(EXIT_FAILURE);
-	if (mlx_image_to_window(mlx_ptr, img, 0, 0) < 0)
+	if (mlx_image_to_window(s_displ.window, s_displ.img, 0, 0) < 0)
 		exit(EXIT_FAILURE);
 	map_x_y_z(argv[1], &s_3d);
 	while (y_cur < s_3d.y_max)
@@ -162,7 +201,7 @@ int	main (int argc, char **argv)
 			s_isom.y1 = y_fla(x_cur - 1, y_cur, s_3d.mtrx[y_cur][x_cur - 1]);
 			s_isom.x2 = x_fla(x_cur, y_cur, s_3d.mtrx[y_cur][x_cur]);
 			s_isom.y2 = y_fla(x_cur, y_cur, s_3d.mtrx[y_cur][x_cur]);
-			draw_line(img, &s_isom);
+			draw_line(s_displ.img, &s_isom);
 			x_cur++;
 		}
 		y_cur++;
@@ -177,14 +216,16 @@ int	main (int argc, char **argv)
 			s_isom.y1 = y_fla(x_cur, y_cur - 1, s_3d.mtrx[y_cur - 1][x_cur]);
 			s_isom.x2 = x_fla(x_cur, y_cur, s_3d.mtrx[y_cur][x_cur]);
 			s_isom.y2 = y_fla(x_cur, y_cur, s_3d.mtrx[y_cur][x_cur]);
-			draw_line(img, &s_isom);
+			draw_line(s_displ.img, &s_isom);
 			y_cur++;
 		}
 		x_cur++;
 	}
-	mlx_loop(mlx_ptr);
-	mlx_delete_image(mlx_ptr, img);
-	mlx_terminate(mlx_ptr);
+	mlx_key_hook(s_displ.window, &esc_close, &s_displ);
+	mlx_loop(s_displ.window);
+	mlx_delete_image(s_displ.window, s_displ.img);
+	mlx_terminate(s_displ.window);
+	ft_free_double_p(s_3d.mtrx, s_3d.y_max);
 	system("leaks fdf");
 	return (EXIT_SUCCESS);
 }

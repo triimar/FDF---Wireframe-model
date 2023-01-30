@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:45:42 by tmarts            #+#    #+#             */
-/*   Updated: 2023/01/28 21:32:19 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/01/30 21:00:47 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,19 @@ typedef struct s_isom {
 	int	y2;
 }	t_isom;
 
+typedef struct s_displ {
+	mlx_t		*window;
+	mlx_image_t	*img;
+}	t_displ;
+
 t_3d	*map_x_y_z(char *map_name, t_3d *s_3d);
 void	draw_line(mlx_image_t *img, t_isom *s_isom);
-// void	draw_line(mlx_image_t *img, int x1, int y1, int x2, int y2);
+// void	draw_grid(t_3d *s_3d, t_isom *s_isom, t_displ *s_displ);
+int		x_fla(double x, double y, double z);
+int		y_fla(double x, double y, double z);
+void	draw_line_high(mlx_image_t *img, int x1, int y1, int x2, int y2);
+void	draw_line_low(mlx_image_t *img, int x1, int y1, int x2, int y2);
+char	*ft_free_double_p(int **p_p, int len);
+void	esc_close(mlx_key_data_t keydata, void *param);
+
 #endif

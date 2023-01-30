@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_parsing.c                                      :+:      :+:    :+:   */
+/*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 22:02:48 by tmarts            #+#    #+#             */
-/*   Updated: 2023/01/28 21:55:03 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/01/30 19:56:27 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,15 @@
 
 char	*ft_free_double_p(int **p_p, int len)
 {
-	len--;
-	while (len >= 0 && p_p[len])
+	int	i;
+
+	i = 0;
+	if (!p_p)
+		return (NULL);
+	while (p_p[i] && i < len)
 	{
-		free(p_p[len]);
-		len--;
+		free(p_p[i]);
+		i++;
 	}
 	free (p_p);
 	return (NULL);
