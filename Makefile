@@ -6,7 +6,7 @@
 #    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 13:04:13 by tmarts            #+#    #+#              #
-#    Updated: 2023/01/30 21:30:58 by tmarts           ###   ########.fr        #
+#    Updated: 2023/01/31 22:48:03 by tmarts           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ LIBFT	= ./libft
 HEADERS	= -I ./include -I $(LIBMLX)/include -I $(LIBFT)
 LIBS	= -lglfw -L /Users/$(USER)/homebrew/Cellar/glfw/3.3.8/lib/ $(LIBMLX)/libmlx42.a $(LIBFT)/libft.a
 # SRCS	= $(shell find ./src -iname "*.c")
-SRCS	= map.c \
+SRCS	= main.c \
+map.c \
 hooks.c \
 draw.c
 OBJS	= ${SRCS:.c=.o}
@@ -43,6 +44,8 @@ libft:
 
 libmlx:
 	@$(MAKE) -C $(LIBMLX)
+  	# @if [ ! -d "MLX42" ]; then git clone https://github.com/codam-coding-college/MLX42.git; fi
+    # @cd MLX42 && make
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "$(GREEN)$(BOLD)\rCompiling: $(notdir $<)\r\e[35C[OK]\n$(RESET)"
