@@ -6,11 +6,12 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 22:02:48 by tmarts            #+#    #+#             */
-/*   Updated: 2023/01/30 19:56:27 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/02 20:06:49 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+// #include<stdio.h>
 
 char	*ft_free_double_p(int **p_p, int len)
 {
@@ -108,6 +109,7 @@ t_3d	*map_x_y_z(char *map_name, t_3d *s_3d)
 		while (j < s_3d->x_max)
 		{
 			s_3d->mtrx[s_3d->y_max][j] = (double)ft_atoi(splits[j]);
+			// printf("[%d]\n", s_3d->mtrx[s_3d->y_max][j]);
 			j++;
 		}
 		ft_free_split(splits);

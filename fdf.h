@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:45:42 by tmarts            #+#    #+#             */
-/*   Updated: 2023/01/31 18:26:01 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/02 20:51:25 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 # define WIDTH 1540
 # define HEIGHT 1028
-# define SCALE 15
+# define SCALE 25.00
 
 # include <stdlib.h>
 # include <unistd.h>
