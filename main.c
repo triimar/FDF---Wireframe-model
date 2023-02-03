@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 19:57:21 by tmarts            #+#    #+#             */
-/*   Updated: 2023/01/31 18:38:34 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/03 21:19:32 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	main(int argc, char **argv)
 {
-	t_3d		s_3d;
 	t_displ		s_displ;
+	t_map		s_map;
 
 	s_displ.window = mlx_init(WIDTH, HEIGHT, "test", true);
 	if (!s_displ.window)
@@ -25,13 +25,14 @@ int	main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	if (mlx_image_to_window(s_displ.window, s_displ.img, 0, 0) < 0)
 		exit(EXIT_FAILURE);
-	map_x_y_z(argv[1], &s_3d);
-	draw_grid(&s_3d, &s_displ);
+	map_x_y_z(argv[1], &s_map);
+	ft_draw_x(&s_map, &s_displ);
+	ft_draw_y(&s_map, &s_displ);
 	mlx_key_hook(s_displ.window, &esc_close, &s_displ);
 	mlx_loop(s_displ.window);
 	mlx_delete_image(s_displ.window, s_displ.img);
 	mlx_terminate(s_displ.window);
-	ft_free_double_p(s_3d.mtrx, s_3d.y_max);
+	ft_free_double_p(s_map.mtrx, s_map.y_max);
 	system("leaks fdf");
 	return (EXIT_SUCCESS);
 }
