@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 22:02:48 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/03 18:51:54 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/06 18:08:40 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ t_map	*map_x_y_z(char *map_name, t_map *s_map)
 
 	s_map->y_max = 0;
 	s_map->x_max = 0;
+	s_map->z_abs_max = NULL;
 	fd = open(map_name, O_RDONLY);
 	str = get_next_line(fd);
 	if (!str)
@@ -174,6 +175,8 @@ t_map	*map_x_y_z(char *map_name, t_map *s_map)
 			s_map->mtrx[s_map->y_max][j].pt_x = (float)j;
 			s_map->mtrx[s_map->y_max][j].pt_y = (float)s_map->y_max;
 			s_map->mtrx[s_map->y_max][j].pt_z = (float)ft_atoi(splits[j]);
+			if (s_map->z_abs_max == 0 || abs(s_map->mtrx[s_map->y_max][j].pt_z) > abs(s_map->z_abs_max->pt_z))
+				s_map->z_abs_max = &s_map->mtrx[s_map->y_max][j];
 			j++;
 		}
 		ft_free_split(splits);
