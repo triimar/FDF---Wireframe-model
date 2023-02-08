@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 18:41:43 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/06 21:32:45 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/08 19:38:34 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,28 +90,7 @@ void	draw_line(mlx_image_t *img, t_2d_isom s_p1, t_2d_isom s_p2)
 	}
 }
 
-void	ft_draw_x(t_map *s_map, t_displ *s_displ)
-{
-	int			column;
-	int			row;
-	t_2d_isom	p_1;
-	t_2d_isom	p_2;
-
-	column = -1;
-	while (++column < s_map->x_max)
-	{
-		row = 0;
-		p_1 = ft_2d_convert(&s_map->mtrx[row][column], s_map);
-		while (++row < s_map->y_max)
-		{
-			p_2 = ft_2d_convert(&s_map->mtrx[row][column], s_map);
-			draw_line(s_displ->img, p_1, p_2);
-			p_1 = p_2;
-		}
-	}
-}
-
-void	ft_draw_y(t_map *s_map, t_displ *s_displ)
+void	ft_draw_x(mlx_image_t *img, t_map *s_map)
 {
 	int			column;
 	int			row;
@@ -126,8 +105,75 @@ void	ft_draw_y(t_map *s_map, t_displ *s_displ)
 		while (++column < s_map->x_max)
 		{
 			p_2 = ft_2d_convert(&s_map->mtrx[row][column], s_map);
-			draw_line(s_displ->img, p_1, p_2);
+			// printf("Isometric x p1:[%d, %d]\n", p_1.x, p_1.y);
+			// printf("Isometric x p2:[%d, %d]\n", p_2.x, p_2.y);
+			draw_line(img, p_1, p_2);
 			p_1 = p_2;
 		}
 	}
+}
+
+void	ft_draw_y(mlx_image_t *img, t_map *s_map)
+{
+	int			column;
+	int			row;
+	t_2d_isom	p_1;
+	t_2d_isom	p_2;
+
+	column = -1;
+	while (++column < s_map->x_max)
+	{
+		row = 0;
+		p_1 = ft_2d_convert(&s_map->mtrx[row][column], s_map);
+		while (++row < s_map->y_max)
+		{
+			p_2 = ft_2d_convert(&s_map->mtrx[row][column], s_map);
+			// printf("Isometric y p1:[%d, %d]\n", p_1.x, p_1.y);
+			// printf("Isometric y p2:[%d, %d]\n", p_2.x, p_2.y);
+			draw_line(img, p_1, p_2);
+			p_1 = p_2;
+		}
+	}
+}
+
+// void	ft_draw_all(mlx_image_t *img, t_map *s_map)
+// {
+// 	int			column;
+// 	int			row;
+// 	t_2d_isom	p_1;
+// 	t_2d_isom	p_2;
+
+// 	ft_memset(img->pixels, 0, img->width * img->height * sizeof(int32_t));
+// 	row = -1;
+// 	while (++row < s_map->y_max)
+// 	{
+// 		column = 0;
+// 		p_1 = ft_2d_convert(&s_map->mtrx[row][column], s_map);
+// 		while (++column < s_map->x_max)
+// 		{
+// 			p_2 = ft_2d_convert(&s_map->mtrx[row][column], s_map);
+// 			draw_line(img, p_1, p_2);
+// 			p_1 = p_2;
+// 		}
+// 	}
+// 	column = -1;
+// 	while (++column < s_map->x_max)
+// 	{
+// 		row = 0;
+// 		p_1 = ft_2d_convert(&s_map->mtrx[row][column], s_map);
+// 		while (++row < s_map->y_max)
+// 		{
+// 			p_2 = ft_2d_convert(&s_map->mtrx[row][column], s_map);
+// 			draw_line(img, p_1, p_2);
+// 			p_1 = p_2;
+// 		}
+// 	}
+// }
+
+void	draw_all(mlx_image_t *img, t_map *s_map)
+{
+	ft_memset(img->pixels, 0, img->width * img->height * sizeof(int32_t));
+	ft_draw_x(img, s_map);
+	ft_draw_y(img, s_map);
+	return ;
 }

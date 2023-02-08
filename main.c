@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 19:57:21 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/06 21:29:39 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/08 21:45:32 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,20 @@
 
 int	main(int argc, char **argv)
 {
-	t_displ		s_displ;
-	t_map		s_map;
+	t_map	s_map;
+	int		fd;
 
-	s_displ.window = mlx_init(WIDTH, HEIGHT, "test", true);
-	if (!s_displ.window)
-		exit(EXIT_FAILURE);
-	s_displ.img = mlx_new_image(s_displ.window, WIDTH, HEIGHT);
-	if (!s_displ.img)
-		exit(EXIT_FAILURE);
-	if (mlx_image_to_window(s_displ.window, s_displ.img, 0, 0) < 0)
-		exit(EXIT_FAILURE);
-	map_x_y_z(argv[1], &s_map);
+	fd = open(argv[1], O_RDONLY);
+	ft_initiate(&s_map);
+	map_x_y_z(fd, &s_map);
 	default_scale(&s_map);
-	ft_draw_x(&s_map, &s_displ);
-	ft_draw_y(&s_map, &s_displ);
-	mlx_key_hook(s_displ.window, &esc_close, &s_displ);
-	mlx_scroll_hook(s_displ.window, &scroll_zoom, &s_displ);
-	mlx_loop(s_displ.window);
-	mlx_delete_image(s_displ.window, s_displ.img);
-	mlx_terminate(s_displ.window);
+	draw_all(s_map.img, &s_map);
+	mlx_scroll_hook(s_map.window, &scroll_zoom, &s_map);
+	mlx_key_hook(s_map.window, &esc_close, &s_map);
+	mlx_loop_hook(s_map.window, (void (*)(void *))genhook_re, &s_map);
+	mlx_loop(s_map.window);
+	mlx_delete_image(s_map.window, s_map.img);
+	mlx_terminate(s_map.window);
 	ft_free_double_p(s_map.mtrx, s_map.y_max);
 	system("leaks fdf");
 	return (EXIT_SUCCESS);
