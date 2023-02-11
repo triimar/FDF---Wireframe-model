@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 18:41:43 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/08 19:38:34 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/11 21:31:34 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,14 @@ void	ft_draw_x(mlx_image_t *img, t_map *s_map)
 	while (++row < s_map->y_max)
 	{
 		column = 0;
-		p_1 = ft_2d_convert(&s_map->mtrx[row][column], s_map);
+		// p_1 = ft_2d_convert(&s_map->mtrx[row][column], s_map);
+		p_1 = ft_parallel(&s_map->mtrx[row][column], s_map, 'z');
 		while (++column < s_map->x_max)
 		{
-			p_2 = ft_2d_convert(&s_map->mtrx[row][column], s_map);
-			// printf("Isometric x p1:[%d, %d]\n", p_1.x, p_1.y);
-			// printf("Isometric x p2:[%d, %d]\n", p_2.x, p_2.y);
+			p_2 = ft_parallel(&s_map->mtrx[row][column], s_map, 'z');
+			// p_2 = ft_2d_convert(&s_map->mtrx[row][column], s_map);
+			printf("Isometric x p1:[%d, %d]\n", p_1.x, p_1.y);
+			printf("Isometric x p2:[%d, %d]\n", p_2.x, p_2.y);
 			draw_line(img, p_1, p_2);
 			p_1 = p_2;
 		}
@@ -124,12 +126,14 @@ void	ft_draw_y(mlx_image_t *img, t_map *s_map)
 	while (++column < s_map->x_max)
 	{
 		row = 0;
-		p_1 = ft_2d_convert(&s_map->mtrx[row][column], s_map);
+		// p_1 = ft_2d_convert(&s_map->mtrx[row][column], s_map);
+		p_1 = ft_parallel(&s_map->mtrx[row][column], s_map, 'x');
 		while (++row < s_map->y_max)
 		{
-			p_2 = ft_2d_convert(&s_map->mtrx[row][column], s_map);
-			// printf("Isometric y p1:[%d, %d]\n", p_1.x, p_1.y);
-			// printf("Isometric y p2:[%d, %d]\n", p_2.x, p_2.y);
+			p_2 = ft_parallel(&s_map->mtrx[row][column], s_map, 'x');
+			// p_2 = ft_2d_convert(&s_map->mtrx[row][column], s_map);
+			printf("Isometric y p1:[%d, %d]\n", p_1.x, p_1.y);
+			printf("Isometric y p2:[%d, %d]\n", p_2.x, p_2.y);
 			draw_line(img, p_1, p_2);
 			p_1 = p_2;
 		}

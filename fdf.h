@@ -6,19 +6,19 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:45:42 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/08 21:29:22 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/11 20:55:28 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# ifndef ARRAY_SIZE
-#  define ARRAY_SIZE 15
-# endif
-
 # define WIDTH 1540
 # define HEIGHT 1028
+
+# ifndef ARRAY_SIZE
+#  define ARRAY_SIZE 80
+# endif
 
 # include <stdlib.h>
 # include <unistd.h>
@@ -71,8 +71,9 @@ char		*ft_free_double_p(void **p_p, int len);
 char		*ft_free_split(char **p_p);
 char		*ft_free_all(t_map *s_map, char **split_str, char *str);
 void		esc_close(mlx_key_data_t keydata, t_map *s_map);
-void		scroll_zoom(double xdelta, double ydelta, t_map *s_map);
+void		scroll_scale(double xdelta, double ydelta, t_map *s_map);
 void		genhook_re(t_map *s_map);
 double		default_scale(t_map *s_map);
+t_2d_isom	ft_parallel(t_3d *s_3d, t_map *s_map, char view);
 
 #endif

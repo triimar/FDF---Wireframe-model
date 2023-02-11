@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 18:25:15 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/08 21:39:05 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/11 18:22:09 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,15 @@ void	genhook_re(t_map *s_map)
 	return ;
 }
 
-void	scroll_zoom(double xdelta, double ydelta, t_map *s_map)
+void	scroll_scale(double xdelta, double ydelta, t_map *s_map)
 {
-	if (ydelta > 0)
-	{
+	if (ydelta > 0 && mlx_is_key_down(s_map->window, MLX_KEY_Z))
+		s_map->z_sc += 0.1;
+	else if (ydelta > 0)
 		s_map->sc = s_map->sc * 1.15;
-	}
-	if (ydelta < 0)
+	if (ydelta < 0 && mlx_is_key_down(s_map->window, MLX_KEY_Z))
+		s_map->z_sc -= 0.1;
+	else if (ydelta < 0)
 	{
 		s_map->sc = s_map->sc / 1.15;
 		if (s_map->sc < 1)

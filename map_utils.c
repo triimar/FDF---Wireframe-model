@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 18:58:45 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/08 19:02:13 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/09 14:57:04 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ char	*ft_free_split(char **p_p)
 	int	i;
 
 	i = 0;
+	if (!p_p)
+		return (NULL);
 	while (p_p[i])
 	{
 		free(p_p[i]);

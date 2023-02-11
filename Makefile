@@ -6,7 +6,7 @@
 #    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 13:04:13 by tmarts            #+#    #+#              #
-#    Updated: 2023/02/08 19:16:02 by tmarts           ###   ########.fr        #
+#    Updated: 2023/02/11 20:02:41 by tmarts           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,11 +20,12 @@ HEADERS	= -I ./include -I $(LIBMLX)/include -I $(LIBFT)
 LIBS	= -lglfw -L /Users/$(USER)/homebrew/Cellar/glfw/3.3.8/lib/ $(LIBMLX)/libmlx42.a $(LIBFT)/libft.a
 # SRCS	= $(shell find ./src -iname "*.c")
 SRCS	= main.c \
+initiate.c \
 converter.c \
  map_utils.c \
 map.c \
 hooks.c \
-draw.c
+draw.c 
 
 OBJS	= ${SRCS:.c=.o}
 

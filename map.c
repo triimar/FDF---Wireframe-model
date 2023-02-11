@@ -6,39 +6,22 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 22:02:48 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/08 21:54:59 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/11 18:55:09 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include<stdio.h>
 
-void	ft_initiate(t_map *s_map)
+int	**ft_map_resize(double **map, int y)
 {
-	s_map->window = mlx_init(WIDTH, HEIGHT, "test", true);
-	if (!s_map->window)
-		exit(EXIT_FAILURE);
-	s_map->img = mlx_new_image(s_map->window, WIDTH, HEIGHT);
-	if (!s_map->img)
-		exit(EXIT_FAILURE);
-	if (mlx_image_to_window(s_map->window, s_map->img, 0, 0) < 0)
-		exit(EXIT_FAILURE);
-	s_map->y_max = 0;
-	s_map->x_max = 0;
-	s_map->center.x_0 = WIDTH / 2;
-	s_map->center.y_0 = HEIGHT / 2;
-	s_map->z_abs_max = NULL;
-}
+	int	**new_map;
 
-double	**ft_map_resize(double **map, int y)
-{
-	double	**new_map;
-
-	new_map = (int *)malloc((y + ARRAY_SIZE) * sizeof(double *));
+	new_map = malloc((y + ARRAY_SIZE) * sizeof(t_3d *));
 	if (!new_map)
-		return (free(map), NULL);
-	ft_memcpy(new_map, map, (y * (double) sizeof(double *)));
+		return (ft_free_double_p(map, y));
+	ft_memcpy(new_map, map, y * sizeof(t_3d *));
 	free(map);
+	printf("here\n");
 	return (new_map);
 }
 
@@ -82,7 +65,7 @@ t_map	*map_x_y_z(int fd, t_map *s_map)
 	str = get_next_line(fd);
 	if (!str)
 		return (0);
-	s_map->mtrx = malloc(ARRAY_SIZE * sizeof(t_3d *));
+	s_map->mtrx = malloc(ARRAY_SIZE * sizeof(int *));
 	if (!s_map->mtrx)
 		return (free(str), NULL);
 	y_coeff = 1;
@@ -90,19 +73,26 @@ t_map	*map_x_y_z(int fd, t_map *s_map)
 	{
 		splits = ft_split(str, ' ');
 		if (!splits)
-			return (ft_free_all(s_map, splits, str));
+		{
+			ft_free_double_p(s_map->mtrx, s_map->y_max);
+			free(str);
+			return (NULL);
+		}
 		free(str);
 		if (s_map->x_max == 0)
 			s_map->x_max = arraylen(splits);
 		if (s_map->y_max >= ARRAY_SIZE * y_coeff)
 		{
-			if (ft_map_resize(s_map->mtrx, s_map->y_max) == NULL)
+			s_map->mtrx = ft_map_resize(s_map->mtrx, s_map->y_max);
+			if (!s_map->mtrx)
 				return (ft_free_split(splits));
 			y_coeff++;
 		}
 		if (ft_get_row(s_map, splits) == NULL)
-			return (ft_free_all(s_map, splits, str));
-		printf("%s\n", splits[0]);
+		{
+			ft_free_double_p(s_map->mtrx, s_map->y_max);
+			ft_free_split(splits);
+		}
 		ft_free_split(splits);
 		str = get_next_line(fd);
 		s_map->y_max++;
