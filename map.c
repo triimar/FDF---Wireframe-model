@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 22:02:48 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/11 18:55:09 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/12 17:45:48 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	**ft_map_resize(double **map, int y)
 		return (ft_free_double_p(map, y));
 	ft_memcpy(new_map, map, y * sizeof(t_3d *));
 	free(map);
-	printf("here\n");
 	return (new_map);
 }
 

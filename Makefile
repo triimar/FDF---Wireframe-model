@@ -6,7 +6,7 @@
 #    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 13:04:13 by tmarts            #+#    #+#              #
-#    Updated: 2023/02/11 20:02:41 by tmarts           ###   ########.fr        #
+#    Updated: 2023/02/12 22:59:16 by tmarts           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,10 @@ initiate.c \
 converter.c \
  map_utils.c \
 map.c \
-hooks.c \
-draw.c 
+draw_line.c \
+draw.c \
+hooks.c 
+
 
 OBJS	= ${SRCS:.c=.o}
 

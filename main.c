@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 19:57:21 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/11 21:01:45 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/12 22:50:35 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@ int	main(int argc, char **argv)
 	ft_initiate(&s_map);
 	map_x_y_z(fd, &s_map);
 	default_scale(&s_map);
-	draw_all(s_map.img, &s_map);
-	// mlx_scroll_hook(s_map.window, &scroll_scale, &s_map);
-	mlx_key_hook(s_map.window, &esc_close, &s_map);
-	// mlx_loop_hook(s_map.window, (void (*)(void *))genhook_re, &s_map);
+	// draw_all(s_map.img, &s_map);
+	draw_all(&ft_isometric, &s_map);
+	mlx_scroll_hook(s_map.window, &scroll_scale, &s_map);
+	mlx_key_hook(s_map.window, &single_key_h, &s_map);
+	mlx_loop_hook(s_map.window, (void (*)(void *))genhook_re, &s_map);
 	mlx_loop(s_map.window);
 	mlx_delete_image(s_map.window, s_map.img);
 	mlx_terminate(s_map.window);
@@ -81,7 +82,7 @@ int	main(int argc, char **argv)
 // 		}
 // 		x_cur++;
 // 	}
-// 	mlx_key_hook(s_displ.window, &esc_close, NULL);
+// 	mlx_key_hook(s_displ.window, &single_key_h, NULL);
 // 	mlx_loop(s_displ.window);
 // 	mlx_delete_image(s_displ.window, s_displ.img);
 // 	mlx_terminate(s_displ.window);
