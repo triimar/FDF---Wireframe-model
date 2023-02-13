@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 18:54:29 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/12 23:02:45 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/13 21:13:57 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,12 @@ void	ft_initiate(t_map *s_map)
 	s_map->y_max = 0;
 	s_map->x_max = 0;
 	s_map->z_sc = 1;
-	s_map->par_view = 1;
 	s_map->center.x_0 = WIDTH / 2;
 	s_map->center.y_0 = HEIGHT / 2;
 	s_map->z_abs_max = NULL;
+	s_map->s_rot.x_angle = 0;
+	s_map->s_rot.y_angle = 0;
+	s_map->s_rot.z_angle = 0;
 }
 
 //taking 4 points of interest - 
@@ -62,4 +64,14 @@ double	default_scale(t_map *s_map)
 	if (s_map->sc < 0)
 		s_map->sc = -1 * s_map->sc;
 	return (round(s_map->sc));
+}
+
+void	ft_defaults(t_map *s_map)
+{
+	default_scale(s_map);
+	s_map->center.x_0 = WIDTH / 2;
+	s_map->center.y_0 = HEIGHT / 2;
+	s_map->s_rot.x_angle = 0;
+	s_map->s_rot.y_angle = 0;
+	s_map->s_rot.z_angle = 0;
 }

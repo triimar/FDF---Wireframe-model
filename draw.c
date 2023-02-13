@@ -6,13 +6,13 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 18:41:43 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/12 22:58:34 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/13 19:14:02 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void	ft_draw_x(t_2d_px (*f)(t_3d *, t_map *), t_map *s_map)
+static void	ft_draw_x(t_conv_f funct, t_map *s_map)
 {
 	int		column;
 	int		row;
@@ -23,17 +23,17 @@ static void	ft_draw_x(t_2d_px (*f)(t_3d *, t_map *), t_map *s_map)
 	while (++row < s_map->y_max)
 	{
 		column = 0;
-		p_1 = f(&s_map->mtrx[row][column], s_map);
+		p_1 = funct(&s_map->mtrx[row][column], s_map);
 		while (++column < s_map->x_max)
 		{
-			p_2 = f(&s_map->mtrx[row][column], s_map);
+			p_2 = funct(&s_map->mtrx[row][column], s_map);
 			draw_line(s_map->img, p_1, p_2);
 			p_1 = p_2;
 		}
 	}
 }
 
-static void	ft_draw_y(t_2d_px (*f)(t_3d *, t_map *), t_map *s_map)
+static void	ft_draw_y(t_conv_f funct, t_map *s_map)
 {
 	int			column;
 	int			row;
@@ -44,10 +44,10 @@ static void	ft_draw_y(t_2d_px (*f)(t_3d *, t_map *), t_map *s_map)
 	while (++column < s_map->x_max)
 	{
 		row = 0;
-		p_1 = f(&s_map->mtrx[row][column], s_map);
+		p_1 = funct(&s_map->mtrx[row][column], s_map);
 		while (++row < s_map->y_max)
 		{
-			p_2 = f(&s_map->mtrx[row][column], s_map);
+			p_2 = funct(&s_map->mtrx[row][column], s_map);
 			draw_line(s_map->img, p_1, p_2);
 			p_1 = p_2;
 		}
