@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:45:42 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/13 22:22:24 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/15 20:21:58 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # define WIDTH 1540
 # define HEIGHT 1028
+# define START_RGBA 0xEE0000FF
+# define END_RGBA 0xFFFFFFFF
 
 # ifndef ARRAY_SIZE
 #  define ARRAY_SIZE 80
@@ -50,7 +52,8 @@ typedef struct center {
 
 typedef struct s_map {
 	t_3d		**mtrx;
-	t_3d		*z_abs_max;
+	t_3d		*pt_z_max;
+	t_3d		*pt_z_min;
 	int			x_max;
 	int			y_max;
 	double		sc;
@@ -59,6 +62,7 @@ typedef struct s_map {
 	mlx_image_t	*img;
 	t_center	center;
 	t_rot		s_rot;
+	int			rgba;
 }	t_map;
 
 typedef struct s_2d_px {
@@ -88,5 +92,6 @@ void		scroll_scale(double xdelta, double ydelta, t_map *s_map);
 void		genhook_re(t_map *s_map);
 double		default_scale(t_map *s_map);
 void		ft_defaults(t_map *s_map);
+void		draw_isom_axis(t_map *s_map);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 22:58:02 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/12 22:58:52 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/16 17:06:51 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	draw_line_low(mlx_image_t *img, t_2d_px s_p1, t_2d_px s_p2)
 	while (s_p1.x < s_p2.x)
 	{
 		if (s_p1.x < WIDTH && s_p1.y < HEIGHT && s_p1.x > 0 && s_p1.y > 0)
-			mlx_put_pixel(img, s_p1.x++, s_p1.y, 0xEE4B2BFF);
+			mlx_put_pixel(img, s_p1.x++, s_p1.y, 0xEE0000FF);
 		else
 			s_p1.x++;
 		if (p < 0)
@@ -60,7 +60,7 @@ void	draw_line_high(mlx_image_t *img, t_2d_px s_p1, t_2d_px s_p2)
 	while (s_p1.y < s_p2.y)
 	{
 		if (s_p1.x < WIDTH && s_p1.y < HEIGHT && s_p1.x > 0 && s_p1.y > 0)
-			mlx_put_pixel(img, s_p1.x, s_p1.y++, 0xEE4B2BFF);
+			mlx_put_pixel(img, s_p1.x, s_p1.y++, 0xEE0000FF);
 		else
 			s_p1.y++;
 		if (p < 0)

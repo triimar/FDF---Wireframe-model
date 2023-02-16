@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:18:11 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/13 22:13:34 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/14 13:40:45 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,12 @@ t_2d_px	ft_parallel_z(t_3d *s_3d, t_map *s_map)
 	return (s_2d_px);
 }
 
-t_2d_px	ft_perspective(t_3d *s_3d, t_map *s_map)
-{
-	double	x_2d;
-	double	y_2d;
-	t_2d_px	s_2d_px;
+// t_2d_px	ft_perspective(t_3d *s_3d, t_map *s_map)
+// {
+// 	double	x_2d;
+// 	double	y_2d;
+// 	t_2d_px	s_2d_px;
 	
-	x_2d = 
-	return (s_2d_px);
-}
+// 	x_2d = 
+// 	return (s_2d_px);
+// }

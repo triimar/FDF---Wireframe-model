@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 18:54:29 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/13 21:13:57 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/16 17:25:53 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,18 @@ void	ft_initiate(t_map *s_map)
 	s_map->z_sc = 1;
 	s_map->center.x_0 = WIDTH / 2;
 	s_map->center.y_0 = HEIGHT / 2;
-	s_map->z_abs_max = NULL;
+	s_map->pt_z_max = NULL;
 	s_map->s_rot.x_angle = 0;
 	s_map->s_rot.y_angle = 0;
 	s_map->s_rot.z_angle = 0;
+}
+
+static double	abs_bigger(double a, double b)
+{
+	if (abs(a) >= abs(b))
+		return (a);
+	else
+		return (b);
 }
 
 //taking 4 points of interest - 
@@ -38,27 +46,28 @@ void	ft_initiate(t_map *s_map)
 // the 2d x axis (width of the window)
 // the point of maximum x and y and pont of maximum z value give the
 // needed scaling of the 2d y axis (height of the window)
-
 double	default_scale(t_map *s_map)
 {
-	double	pt_max_xy;
 	double	pt_max_z;
-	double	scale_x;
+	double	max_h;
+	double	width_sc;
 
 	if (s_map->x_max >= s_map->y_max)
-		scale_x = (WIDTH / 2 - 80) / (s_map->x_max - 1) * cos((M_PI / 6));
+		width_sc = (WIDTH / 2 - 80) / (s_map->x_max - 1) * cos(M_PI / 6);
 	else
-		scale_x = (WIDTH / 2 - 80) / (-1 - s_map->y_max) * cos(M_PI / 6);
-	pt_max_xy = (s_map->x_max + s_map->y_max - 2) * sin(M_PI / 6) - \
+		width_sc = (WIDTH / 2 - 80) / (-1 - s_map->y_max) * cos(M_PI / 6);
+	max_h = (s_map->x_max + s_map->y_max - 2) * sin(M_PI / 6) - \
 	s_map->mtrx[s_map->y_max - 1][s_map->x_max - 1].pt_z;
-	pt_max_z = (s_map->z_abs_max->pt_x + s_map->z_abs_max->pt_y) \
-	* sin(M_PI / 6) - s_map->z_abs_max->pt_z;
-	if (abs(pt_max_xy) <= abs(pt_max_z) && pt_max_z != 0)
-		s_map->sc = (HEIGHT / 2 - 80) / pt_max_z;
+	if ((abs(s_map->pt_z_max->pt_z) >= abs(s_map->pt_z_min->pt_z)))
+		pt_max_z = (s_map->pt_z_max->pt_x + s_map->pt_z_max->pt_y) \
+		* sin(M_PI / 6) - abs(s_map->pt_z_max->pt_z);
 	else
-		s_map->sc = (HEIGHT / 2 - 80) / pt_max_xy;
-	if (abs(scale_x) < abs(s_map->sc))
-		s_map->sc = scale_x;
+		pt_max_z = (s_map->pt_z_min->pt_x + s_map->pt_z_min->pt_y) \
+		* sin(M_PI / 6) - abs(s_map->pt_z_min->pt_z);
+	max_h = abs_bigger(max_h, pt_max_z);
+	s_map->sc = (HEIGHT / 2 - 80) / max_h;
+	if (abs(width_sc) < abs(s_map->sc))
+		s_map->sc = width_sc;
 	if (s_map->sc < 1 && s_map->sc >= 0)
 		s_map->sc = 1;
 	if (s_map->sc < 0)

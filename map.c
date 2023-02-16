@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 22:02:48 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/12 17:45:48 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/16 17:38:26 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,12 @@ t_3d	*ft_get_row(t_map *s_map, char **splits)
 		s_map->mtrx[s_map->y_max][j].pt_x = (double)j;
 		s_map->mtrx[s_map->y_max][j].pt_y = (double)s_map->y_max;
 		s_map->mtrx[s_map->y_max][j].pt_z = (double)ft_atoi(splits[j]);
-		if (!s_map->z_abs_max || \
-		abs(s_map->mtrx[s_map->y_max][j].pt_z) > abs(s_map->z_abs_max->pt_z))
-			s_map->z_abs_max = &s_map->mtrx[s_map->y_max][j];
+		if (!s_map->pt_z_max || \
+		s_map->mtrx[s_map->y_max][j].pt_z > s_map->pt_z_max->pt_z)
+			s_map->pt_z_max = &s_map->mtrx[s_map->y_max][j];
+		if (!s_map->pt_z_min || \
+		s_map->mtrx[s_map->y_max][j].pt_z < s_map->pt_z_min->pt_z)
+			s_map->pt_z_min = &s_map->mtrx[s_map->y_max][j];
 		j++;
 	}
 	return (s_map->mtrx[s_map->y_max]);
@@ -72,11 +75,7 @@ t_map	*map_x_y_z(int fd, t_map *s_map)
 	{
 		splits = ft_split(str, ' ');
 		if (!splits)
-		{
-			ft_free_double_p(s_map->mtrx, s_map->y_max);
-			free(str);
-			return (NULL);
-		}
+			return (ft_free_all(s_map, 0, str));
 		free(str);
 		if (s_map->x_max == 0)
 			s_map->x_max = arraylen(splits);
@@ -88,10 +87,7 @@ t_map	*map_x_y_z(int fd, t_map *s_map)
 			y_coeff++;
 		}
 		if (ft_get_row(s_map, splits) == NULL)
-		{
-			ft_free_double_p(s_map->mtrx, s_map->y_max);
-			ft_free_split(splits);
-		}
+			ft_free_all(s_map, splits, 0);
 		ft_free_split(splits);
 		str = get_next_line(fd);
 		s_map->y_max++;

@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 18:58:45 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/09 14:57:04 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/16 17:31:55 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*ft_free_split(char **p_p)
 
 char	*ft_free_all(t_map *s_map, char **split_str, char *str)
 {
-	if (s_map->mtrx)
+	if (s_map != 0 && s_map->mtrx)
 		ft_free_double_p(s_map->mtrx, s_map->y_max);
 	if (split_str)
 		ft_free_split(split_str);
