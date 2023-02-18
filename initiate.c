@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 18:54:29 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/16 17:25:53 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/18 21:02:28 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,12 @@ void	ft_initiate(t_map *s_map)
 		exit(EXIT_FAILURE);
 	s_map->y_max = 0;
 	s_map->x_max = 0;
+	s_map->y_coeff = 1;
 	s_map->z_sc = 1;
-	s_map->center.x_0 = WIDTH / 2;
-	s_map->center.y_0 = HEIGHT / 2;
 	s_map->pt_z_max = NULL;
-	s_map->s_rot.x_angle = 0;
-	s_map->s_rot.y_angle = 0;
-	s_map->s_rot.z_angle = 0;
+	s_map->pt_z_min = NULL;
+	s_map->mtrx = NULL;
+	ft_defaults(s_map);
 }
 
 static double	abs_bigger(double a, double b)
@@ -77,10 +76,11 @@ double	default_scale(t_map *s_map)
 
 void	ft_defaults(t_map *s_map)
 {
-	default_scale(s_map);
 	s_map->center.x_0 = WIDTH / 2;
 	s_map->center.y_0 = HEIGHT / 2;
 	s_map->s_rot.x_angle = 0;
 	s_map->s_rot.y_angle = 0;
 	s_map->s_rot.z_angle = 0;
+	if (s_map->mtrx)
+		default_scale(s_map);
 }

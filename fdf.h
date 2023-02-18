@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:45:42 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/15 20:21:58 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/18 22:22:43 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define END_RGBA 0xFFFFFFFF
 
 # ifndef ARRAY_SIZE
-#  define ARRAY_SIZE 80
+#  define ARRAY_SIZE 2
 # endif
 
 # include <stdlib.h>
@@ -56,6 +56,7 @@ typedef struct s_map {
 	t_3d		*pt_z_min;
 	int			x_max;
 	int			y_max;
+	int			y_coeff;
 	double		sc;
 	double		z_sc;
 	mlx_t		*window;
@@ -73,15 +74,16 @@ typedef struct s_2d_px {
 typedef t_2d_px	(*t_conv_f)(t_3d *, t_map *);
 
 void		ft_initiate(t_map *s_map);
-t_3d		*ft_get_row(t_map *s_map, char **splits);
-t_map		*map_x_y_z(int fd, t_map *s_map);
+t_map		*map_parse(int fd, t_map *s_map);
 void		draw_line(mlx_image_t *img, t_2d_px s_p1, t_2d_px s_p2);
 void		draw_all(t_conv_f funct, t_map *s_map);
 t_2d_px		ft_isometric(t_3d *s_3d, t_map *s_map);
 t_2d_px		ft_parallel_x(t_3d *s_3d, t_map *s_map);
 t_2d_px		ft_parallel_y(t_3d *s_3d, t_map *s_map);
 t_2d_px		ft_parallel_z(t_3d *s_3d, t_map *s_map);
-t_3d		ft_rotate_x(t_3d *s_3d, t_map *s_map);
+t_2d_px		ft_iso_rot_x(t_3d *s_3d, t_map *s_map);
+t_2d_px		ft_iso_rot_y(t_3d *s_3d, t_map *s_map);
+t_2d_px		ft_iso_rot_z(t_3d *s_3d, t_map *s_map);
 void		draw_line_low(mlx_image_t *img, t_2d_px s_p1, t_2d_px s_p2);
 void		draw_line_high(mlx_image_t *img, t_2d_px s_p1, t_2d_px s_p2);
 char		*ft_free_double_p(void **p_p, int len);
@@ -92,6 +94,5 @@ void		scroll_scale(double xdelta, double ydelta, t_map *s_map);
 void		genhook_re(t_map *s_map);
 double		default_scale(t_map *s_map);
 void		ft_defaults(t_map *s_map);
-void		draw_isom_axis(t_map *s_map);
 
 #endif
