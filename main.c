@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 19:57:21 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/18 17:07:31 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/19 16:44:30 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	main(int argc, char **argv)
 	fd = open(argv[1], O_RDONLY);
 	ft_initiate(&s_map);
 	map_parse(fd, &s_map);
-	default_scale(&s_map);
+	ft_defaults(&s_map);
+	// default_scale(&s_map);
 	// draw_all(s_map.img, &s_map);
 	draw_all(&ft_isometric, &s_map);
 	// draw_isom_axis(&s_map);

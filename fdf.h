@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:45:42 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/18 22:22:43 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/19 19:42:35 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,12 @@ typedef struct s_3d {
 	double	pt_z;
 }	t_3d;
 
+typedef struct s_2d_px {
+	int	x;
+	int	y;
+}	t_2d_px;
+
+
 typedef struct s_rot {
 	double	x_angle;
 	double	y_angle;
@@ -49,6 +55,10 @@ typedef struct center {
 	int	x_0;
 	int	y_0;
 }	t_center;
+
+typedef struct s_rgba {
+	int	rgba;
+}	t_rgba;
 
 typedef struct s_map {
 	t_3d		**mtrx;
@@ -63,13 +73,8 @@ typedef struct s_map {
 	mlx_image_t	*img;
 	t_center	center;
 	t_rot		s_rot;
-	int			rgba;
+	t_rgba		col;
 }	t_map;
-
-typedef struct s_2d_px {
-	int	x;
-	int	y;
-}	t_2d_px;
 
 typedef t_2d_px	(*t_conv_f)(t_3d *, t_map *);
 
@@ -81,9 +86,7 @@ t_2d_px		ft_isometric(t_3d *s_3d, t_map *s_map);
 t_2d_px		ft_parallel_x(t_3d *s_3d, t_map *s_map);
 t_2d_px		ft_parallel_y(t_3d *s_3d, t_map *s_map);
 t_2d_px		ft_parallel_z(t_3d *s_3d, t_map *s_map);
-t_2d_px		ft_iso_rot_x(t_3d *s_3d, t_map *s_map);
-t_2d_px		ft_iso_rot_y(t_3d *s_3d, t_map *s_map);
-t_2d_px		ft_iso_rot_z(t_3d *s_3d, t_map *s_map);
+t_2d_px		ft_iso_rot(t_3d *s_3d, t_map *s_map);
 void		draw_line_low(mlx_image_t *img, t_2d_px s_p1, t_2d_px s_p2);
 void		draw_line_high(mlx_image_t *img, t_2d_px s_p1, t_2d_px s_p2);
 char		*ft_free_double_p(void **p_p, int len);

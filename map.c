@@ -6,13 +6,13 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 22:02:48 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/16 17:38:26 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/18 21:03:29 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	**ft_map_resize(double **map, int y)
+static int	**ft_map_resize(double **map, int y)
 {
 	int	**new_map;
 
@@ -24,7 +24,17 @@ int	**ft_map_resize(double **map, int y)
 	return (new_map);
 }
 
-t_3d	*ft_get_row(t_map *s_map, char **splits)
+static int	fdf_arraylen(char **splits)
+{
+	int	x;
+
+	x = 0;
+	while (splits[x] != 0 && splits[x][0] != '\n')
+		x++;
+	return (x);
+}
+
+static t_3d	*get_xyz(t_map *s_map, char **splits)
 {
 	int	j;
 
@@ -48,21 +58,36 @@ t_3d	*ft_get_row(t_map *s_map, char **splits)
 	return (s_map->mtrx[s_map->y_max]);
 }
 
-static int	arraylen(char **splits)
+static char	*row_parse(int fd, char *str, t_map *s_map)
 {
-	int	x;
+	char	**splits;
+	char	*next_str;
 
-	x = 0;
-	while (splits[x] != 0 && splits[x][0] != '\n')
-		x++;
-	return (x);
+	splits = ft_split(str, ' ');
+	if (!splits)
+		return (ft_free_all(s_map, 0, str));
+	free(str);
+	if (s_map->x_max == 0)
+		s_map->x_max = fdf_arraylen(splits);
+	if (s_map->y_max >= ARRAY_SIZE * s_map->y_coeff)
+	{
+		s_map->mtrx = ft_map_resize(s_map->mtrx, s_map->y_max);
+		if (!s_map->mtrx)
+			return (ft_free_split(splits));
+			s_map->y_coeff++;
+	}
+	if (get_xyz(s_map, splits) == NULL)
+		return (ft_free_all(s_map, splits, 0));
+	ft_free_split(splits);
+	next_str = get_next_line(fd);
+	if (!next_str)
+		return (NULL);
+	return (next_str);
 }
 
-t_map	*map_x_y_z(int fd, t_map *s_map)
+t_map	*map_parse(int fd, t_map *s_map)
 {
 	char	*str;
-	char	**splits;
-	int		y_coeff;
 
 	str = get_next_line(fd);
 	if (!str)
@@ -70,26 +95,9 @@ t_map	*map_x_y_z(int fd, t_map *s_map)
 	s_map->mtrx = malloc(ARRAY_SIZE * sizeof(int *));
 	if (!s_map->mtrx)
 		return (free(str), NULL);
-	y_coeff = 1;
 	while (str)
 	{
-		splits = ft_split(str, ' ');
-		if (!splits)
-			return (ft_free_all(s_map, 0, str));
-		free(str);
-		if (s_map->x_max == 0)
-			s_map->x_max = arraylen(splits);
-		if (s_map->y_max >= ARRAY_SIZE * y_coeff)
-		{
-			s_map->mtrx = ft_map_resize(s_map->mtrx, s_map->y_max);
-			if (!s_map->mtrx)
-				return (ft_free_split(splits));
-			y_coeff++;
-		}
-		if (ft_get_row(s_map, splits) == NULL)
-			ft_free_all(s_map, splits, 0);
-		ft_free_split(splits);
-		str = get_next_line(fd);
+		str = row_parse(fd, str, s_map);
 		s_map->y_max++;
 	}
 	return (s_map->mtrx);

@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 18:54:29 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/18 21:02:28 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/19 17:56:39 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_initiate(t_map *s_map)
 	s_map->pt_z_max = NULL;
 	s_map->pt_z_min = NULL;
 	s_map->mtrx = NULL;
-	ft_defaults(s_map);
+	// ft_defaults(s_map);
 }
 
 static double	abs_bigger(double a, double b)
