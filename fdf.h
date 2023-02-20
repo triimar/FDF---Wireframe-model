@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:45:42 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/19 19:42:35 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/20 19:06:40 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ typedef struct s_3d {
 typedef struct s_2d_px {
 	int	x;
 	int	y;
+	int	pt_rgba;
+	// int	st_rgba;
+	// int	e_rgba;
 }	t_2d_px;
 
 
@@ -56,9 +59,11 @@ typedef struct center {
 	int	y_0;
 }	t_center;
 
-typedef struct s_rgba {
-	int	rgba;
-}	t_rgba;
+// typedef struct s_rgba {
+// 	int	c_rgba;
+// 	int	st_rgba;
+// 	int	e_rgba;
+// }	t_rgba;
 
 typedef struct s_map {
 	t_3d		**mtrx;
@@ -73,7 +78,7 @@ typedef struct s_map {
 	mlx_image_t	*img;
 	t_center	center;
 	t_rot		s_rot;
-	t_rgba		col;
+	// t_rgba		col;
 }	t_map;
 
 typedef t_2d_px	(*t_conv_f)(t_3d *, t_map *);
@@ -97,5 +102,5 @@ void		scroll_scale(double xdelta, double ydelta, t_map *s_map);
 void		genhook_re(t_map *s_map);
 double		default_scale(t_map *s_map);
 void		ft_defaults(t_map *s_map);
-
+int			get_rgba(double pct, int start, int end);
 #endif

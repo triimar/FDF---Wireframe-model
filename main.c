@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 19:57:21 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/19 16:44:30 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/20 15:51:58 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,18 @@ int	main(int argc, char **argv)
 	int		fd;
 
 	fd = open(argv[1], O_RDONLY);
+	if (fd < 0 || fd > 1024)
+		return (NULL); //need error message here
 	ft_initiate(&s_map);
 	map_parse(fd, &s_map);
 	ft_defaults(&s_map);
-	// default_scale(&s_map);
-	// draw_all(s_map.img, &s_map);
 	draw_all(&ft_isometric, &s_map);
-	// draw_isom_axis(&s_map);
 	mlx_scroll_hook(s_map.window, &scroll_scale, &s_map);
 	mlx_key_hook(s_map.window, &single_key_h, &s_map);
 	mlx_loop_hook(s_map.window, (void (*)(void *))genhook_re, &s_map);
 	mlx_loop(s_map.window);
 	mlx_delete_image(s_map.window, s_map.img);
 	mlx_terminate(s_map.window);
-	// ft_free_double_p(s_map.mtrx, s_map.y_max);
 	ft_free_all(&s_map, 0, 0);
 	system("leaks fdf");
 	return (EXIT_SUCCESS);
