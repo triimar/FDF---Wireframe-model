@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:18:11 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/19 17:17:38 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/22 22:02:12 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,3 @@ t_2d_px	ft_parallel_z(t_3d *s_3d, t_map *s_map)
 	s_2d_px.x = round(x_2d + s_map->center.x_0);
 	return (s_2d_px);
 }
-

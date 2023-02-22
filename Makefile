@@ -6,7 +6,7 @@
 #    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 13:04:13 by tmarts            #+#    #+#              #
-#    Updated: 2023/02/13 19:04:31 by tmarts           ###   ########.fr        #
+#    Updated: 2023/02/20 16:31:34 by tmarts           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ LIBS	= -lglfw -L /Users/$(USER)/homebrew/Cellar/glfw/3.3.8/lib/ $(LIBMLX)/libmlx
 # SRCS	= $(shell find ./src -iname "*.c")
 SRCS	= main.c \
 initiate.c \
-converter.c \
+2d_converters.c \
+color.c \
 rotations.c \
  map_utils.c \
 map.c \

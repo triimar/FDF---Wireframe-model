@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:45:42 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/20 19:06:40 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/22 17:39:28 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 # define WIDTH 1540
 # define HEIGHT 1028
 # define START_RGBA 0xEE0000FF
-# define END_RGBA 0xFFFFFFFF
+# define END_RGBA 	0xFFFFFFFF
 
 # ifndef ARRAY_SIZE
-#  define ARRAY_SIZE 2
+#  define ARRAY_SIZE 20
 # endif
 
 # include <stdlib.h>
@@ -102,5 +102,6 @@ void		scroll_scale(double xdelta, double ydelta, t_map *s_map);
 void		genhook_re(t_map *s_map);
 double		default_scale(t_map *s_map);
 void		ft_defaults(t_map *s_map);
+double		position_pct(double min, double max, double current);
 int			get_rgba(double pct, int start, int end);
 #endif

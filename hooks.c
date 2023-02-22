@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 18:25:15 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/19 19:59:35 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/22 22:21:51 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	single_key_h(mlx_key_data_t keydata, t_map *s_map)
 	if (keydata.key == MLX_KEY_1)
 	{
 		ft_defaults(s_map);
-		draw_all(&ft_isometric, s_map);
+		draw_all(&ft_iso_rot, s_map);
 	}
 	if (keydata.key == MLX_KEY_2)
 	{
@@ -43,6 +43,7 @@ void	single_key_h(mlx_key_data_t keydata, t_map *s_map)
 
 static void	rotations_hook(keys_t key, t_map *s_map)
 {
+	s_map->z_sc = 1;
 	if ((key == MLX_KEY_W))
 		s_map->s_rot.x_angle += M_PI / 180;
 	if (key == MLX_KEY_Q)
@@ -67,7 +68,7 @@ static void	rotations_hook(keys_t key, t_map *s_map)
 	draw_all(&ft_iso_rot, s_map);
 }
 
-static void	zoom_hook(keys_t key, t_map *s_map)
+static void	translate_h(keys_t key, t_map *s_map)
 {
 	if ((key == MLX_KEY_UP))
 		s_map->center.y_0 -= 5;
@@ -77,19 +78,19 @@ static void	zoom_hook(keys_t key, t_map *s_map)
 		s_map->center.x_0 -= 5;
 	if (key == MLX_KEY_RIGHT)
 		s_map->center.x_0 += 5;
-	draw_all(&ft_isometric, s_map);
+	draw_all(&ft_iso_rot, s_map);
 }
 
 void	genhook_re(t_map *s_map)
 {
 	if (mlx_is_key_down(s_map->window, MLX_KEY_UP))
-		zoom_hook(MLX_KEY_UP, s_map);
+		translate_h(MLX_KEY_UP, s_map);
 	if (mlx_is_key_down(s_map->window, MLX_KEY_DOWN))
-		zoom_hook(MLX_KEY_DOWN, s_map);
+		translate_h(MLX_KEY_DOWN, s_map);
 	if (mlx_is_key_down(s_map->window, MLX_KEY_LEFT))
-		zoom_hook(MLX_KEY_LEFT, s_map);
+		translate_h(MLX_KEY_LEFT, s_map);
 	if (mlx_is_key_down(s_map->window, MLX_KEY_RIGHT))
-		zoom_hook(MLX_KEY_RIGHT, s_map);
+		translate_h(MLX_KEY_RIGHT, s_map);
 	if (mlx_is_key_down(s_map->window, MLX_KEY_W))
 		rotations_hook(MLX_KEY_W, s_map);
 	if (mlx_is_key_down(s_map->window, MLX_KEY_Q))
@@ -107,17 +108,21 @@ void	genhook_re(t_map *s_map)
 
 void	scroll_scale(double xdelta, double ydelta, t_map *s_map)
 {
-	if (ydelta > 0 && mlx_is_key_down(s_map->window, MLX_KEY_Z))
-		s_map->z_sc += 0.1;
+	if (ydelta > 0 && mlx_is_key_down(s_map->window, MLX_KEY_H) && \
+	s_map->s_rot.x_angle == 0 && s_map->s_rot.y_angle == 0 && \
+	s_map->s_rot.z_angle == 0)
+			s_map->z_sc += 0.2;
 	else if (ydelta > 0)
-		s_map->sc = s_map->sc * 1.15;
-	if (ydelta < 0 && mlx_is_key_down(s_map->window, MLX_KEY_Z))
-		s_map->z_sc -= 0.1;
+		s_map->sc += 1;
+	if (ydelta < 0 && mlx_is_key_down(s_map->window, MLX_KEY_H) && \
+	s_map->s_rot.x_angle == 0 && s_map->s_rot.y_angle == 0 && \
+		s_map->s_rot.z_angle == 0)
+			s_map->z_sc -= 0.2;
 	else if (ydelta < 0)
 	{
-		s_map->sc = s_map->sc / 1.15;
+		s_map->sc -= 1;
 		if (s_map->sc < 1)
 			s_map->sc = 1;
 	}
-	draw_all(&ft_isometric, s_map);
+	draw_all(&ft_iso_rot, s_map);
 }

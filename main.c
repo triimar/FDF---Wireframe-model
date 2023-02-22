@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 19:57:21 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/20 15:51:58 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/22 21:36:39 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ int	main(int argc, char **argv)
 		return (NULL); //need error message here
 	ft_initiate(&s_map);
 	map_parse(fd, &s_map);
+	close(fd);
 	ft_defaults(&s_map);
-	draw_all(&ft_isometric, &s_map);
+	draw_all(&ft_iso_rot, &s_map);
 	mlx_scroll_hook(s_map.window, &scroll_scale, &s_map);
 	mlx_key_hook(s_map.window, &single_key_h, &s_map);
 	mlx_loop_hook(s_map.window, (void (*)(void *))genhook_re, &s_map);
