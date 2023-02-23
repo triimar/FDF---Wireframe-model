@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 18:41:43 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/22 17:39:19 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/23 17:53:22 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ static void	ft_draw_x(t_conv_f funct, t_map *s_map)
 {
 	int		column;
 	int		row;
-	t_2d_px	p_1;
-	t_2d_px	p_2;
+	t_2d	p_1;
+	t_2d	p_2;
 	double	pos_pct;
 
 	row = -1;
@@ -44,8 +44,8 @@ static void	ft_draw_y(t_conv_f funct, t_map *s_map)
 {
 	int			column;
 	int			row;
-	t_2d_px		p_1;
-	t_2d_px		p_2;
+	t_2d		p_1;
+	t_2d		p_2;
 	double		pos_pct;
 
 	column = -1;

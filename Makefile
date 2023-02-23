@@ -6,12 +6,14 @@
 #    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 13:04:13 by tmarts            #+#    #+#              #
-#    Updated: 2023/02/20 16:31:34 by tmarts           ###   ########.fr        #
+#    Updated: 2023/02/23 19:21:18 by tmarts           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= fdf
-CFLAGS	= -w -Wunreachable-code -Ofast
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror
+CFLAGS	+= -w -Wunreachable-code -Ofast
 # CFLAGS += -fsanitize=address -g3 -march=nocona -flto 
 LIBMLX	= ./MLX42
 LIBFT	= ./libft
@@ -32,19 +34,6 @@ hooks.c
 
 
 OBJS	= ${SRCS:.c=.o}
-
-# BOLD	= \033[1m
-# BLACK	= \033[30;1m
-# RED	= \033[31;1m
-# GREEN	= \033[32;1m
-# YELLOW	= \033[33;1m
-# BLUE	= \033[34;1m
-# MAGENTA	= \033[35;1m
-# CYAN	= \033[36;1m
-# WHITE	= \033[37;1m
-# RESET	= \033[0m
-
-# //= Recipes =//
 
 all: libft libmlx $(NAME)
 
