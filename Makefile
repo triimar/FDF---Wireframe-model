@@ -6,14 +6,16 @@
 #    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 13:04:13 by tmarts            #+#    #+#              #
-#    Updated: 2023/02/24 01:53:44 by tmarts           ###   ########.fr        #
+#    Updated: 2023/02/24 19:35:51 by tmarts           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= fdf
 CC = gcc
-CFLAGS	= -Wall -Wextra -Werror -fsanitize=address -g3
-LDFLAGS = -fsanitize=address -g3
+CFLAGS	= -Wall -Wextra -Werror 
+# CFLAGS += -fsanitize=address -g3
+LDFLAGS = -lm
+# LDFLAGS += -fsanitize=address -g3
 LIBMLX	= ./MLX42
 LIBFT	= ./libft
 HEADERS	= -I ./include -I $(LIBMLX)/include -I $(LIBFT)
@@ -25,7 +27,7 @@ initiate.c \
 2d_converters.c \
 color.c \
 rotations.c \
- map_utils.c \
+fdf_utils.c \
 map.c \
 draw_line.c \
 draw.c \
@@ -40,6 +42,8 @@ libft:
 
 libmlx:
 	@$(MAKE) -C $(LIBMLX)
+
+bonus: all
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)

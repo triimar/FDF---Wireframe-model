@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_utils.c                                        :+:      :+:    :+:   */
+/*   fdf_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 18:58:45 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/24 00:17:31 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/24 19:07:18 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ char	*ft_free_double_p(t_3d **p_p, int len)
 		free(p_p[i]);
 		i++;
 	}
-	// free(p_p[i]);
 	free (p_p);
+	p_p = NULL;
 	return (NULL);
 }
 
@@ -54,4 +54,16 @@ char	*ft_free_all(t_map *s_map, char **split_str, char *str)
 	if (str)
 		free(str);
 	return (NULL);
+}
+
+void	error_msg(int error)
+{
+	if (error == 1)
+		ft_printf("ERROR: incorrect number of arguments\n");
+	if (error == 2)
+		ft_printf("ERROR: incorrect file name or invalid fd\n");
+	if (error == 3)
+		ft_printf("ERROR: MLX failure\n");
+	if (error == 4)
+		ft_printf("ERROR: map parsing failure\n");
 }

@@ -6,21 +6,18 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:45:42 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/24 01:28:11 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/24 18:00:25 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
+# define ARRAY_SIZE 25
 # define WIDTH 1540
 # define HEIGHT 1028
 # define START_RGBA 0xEE0000FF
 # define END_RGBA 	0xFFFFFFFF
-
-# ifndef ARRAY_SIZE
-#  define ARRAY_SIZE 20
-# endif
 
 # include <stdlib.h>
 # include <unistd.h>
@@ -28,9 +25,7 @@
 # include "../libft/libft.h"
 # include <fcntl.h>
 # include "../MLX42/include/MLX42/MLX42.h"
-// # include "../MLX42/include/MLX42/MLX42_Int.h"
 # include "../MLX42/include/MLX42/MLX42_Input.h"
-# include <stdio.h> 
 
 typedef struct s_3d {
 	double	pt_x;
@@ -105,9 +100,10 @@ void			genhook_re(t_map *s_map);
 /*color*/
 double			position_pct(double min, double max, double current);
 int				get_rgba(double pct, int start, int end);
-/*map_utils*/
+/*fdf_utils*/
 char			*ft_free_double_p(t_3d **p_p, int len);
 char			*ft_free_split(char **p_p);
 char			*ft_free_all(t_map *s_map, char **split_str, char *str);
+void			error_msg(int error);
 
 #endif

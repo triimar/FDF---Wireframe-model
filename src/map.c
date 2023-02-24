@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 22:02:48 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/23 23:51:00 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/24 18:53:24 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ t_3d	**map_parse(int fd, t_map *s_map)
 
 	str = get_next_line(fd);
 	if (!str)
-		return (0);
+		return (NULL);
 	s_map->mtrx = malloc(ARRAY_SIZE * sizeof(t_3d *));
 	if (!s_map->mtrx)
 		return (free(str), NULL);

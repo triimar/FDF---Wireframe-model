@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 19:39:05 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/23 19:17:14 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/24 16:53:52 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ double	position_pct(double min, double max, double current)
 	double	percentage;
 
 	range = max - min;
+	if (range == 0)
+		return (0);
 	position = current - min;
 	percentage = position / range;
 	return (percentage);

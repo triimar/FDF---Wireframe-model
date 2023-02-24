@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 18:54:29 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/24 01:15:05 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/24 19:24:49 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,23 @@
 
 void	ft_initiate(t_map *s_map)
 {
-	s_map->window = mlx_init(WIDTH, HEIGHT, "test", true);
+	s_map->window = mlx_init(WIDTH, HEIGHT, "FDF Wireframe Model", true);
 	if (!s_map->window)
+	{
+		error_msg(3);
 		exit(EXIT_FAILURE);
+	}
 	s_map->img = mlx_new_image(s_map->window, WIDTH, HEIGHT);
 	if (!s_map->img)
+	{
+		error_msg(3);
 		exit(EXIT_FAILURE);
+	}
 	if (mlx_image_to_window(s_map->window, s_map->img, 0, 0) < 0)
+	{
+		error_msg(3);
 		exit(EXIT_FAILURE);
+	}
 	s_map->y_max = 0;
 	s_map->x_max = 0;
 	s_map->y_coeff = 1;
