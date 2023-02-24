@@ -6,14 +6,17 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 18:25:15 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/23 19:14:43 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/24 01:22:56 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	single_key_h(mlx_key_data_t keydata, t_map *s_map)
+void	single_key_h(mlx_key_data_t keydata, void *param)
 {
+	t_map	*s_map;
+
+	s_map = (t_map *)param;
 	if (keydata.key == MLX_KEY_ESCAPE)
 	{
 		mlx_close_window(s_map->window);
@@ -24,27 +27,23 @@ void	single_key_h(mlx_key_data_t keydata, t_map *s_map)
 		ft_defaults(s_map);
 		draw_all(&ft_iso_rot, s_map);
 	}
-	if (keydata.key == MLX_KEY_2)
+	if (keydata.key == MLX_KEY_2 || keydata.key == MLX_KEY_3 \
+	|| keydata.key == MLX_KEY_4)
 	{
 		ft_defaults(s_map);
-		draw_all(&ft_parallel_x, s_map);
-	}
-	if (keydata.key == MLX_KEY_3)
-	{
-		ft_defaults(s_map);
-		draw_all(&ft_parallel_y, s_map);
-	}
-	if (keydata.key == MLX_KEY_4)
-	{
-		ft_defaults(s_map);
-		draw_all(&ft_parallel_z, s_map);
+		if (keydata.key == MLX_KEY_2)
+			draw_all(&ft_parallel_x, s_map);
+		if (keydata.key == MLX_KEY_3)
+			draw_all(&ft_parallel_y, s_map);
+		if (keydata.key == MLX_KEY_4)
+			draw_all(&ft_parallel_z, s_map);
 	}
 }
 
 static void	rotations_hook(keys_t key, t_map *s_map)
 {
 	s_map->z_sc = 1;
-	if ((key == MLX_KEY_W))
+	if (key == MLX_KEY_W)
 		s_map->s_rot.x_angle += M_PI / 180;
 	if (key == MLX_KEY_Q)
 		s_map->s_rot.x_angle -= M_PI / 180;
@@ -70,7 +69,7 @@ static void	rotations_hook(keys_t key, t_map *s_map)
 
 static void	translate_h(keys_t key, t_map *s_map)
 {
-	if ((key == MLX_KEY_UP))
+	if (key == MLX_KEY_UP)
 		s_map->center.y_0 -= 5;
 	if (key == MLX_KEY_DOWN)
 		s_map->center.y_0 += 5;
@@ -106,23 +105,24 @@ void	genhook_re(t_map *s_map)
 	return ;
 }
 
-void	scroll_scale(double xdelta, double ydelta, t_map *s_map)
+void	scroll_scale(double xdelta, double ydelta, void *param)
 {
-	if (ydelta > 0 && mlx_is_key_down(s_map->window, MLX_KEY_H) && \
-	s_map->s_rot.x_angle == 0 && s_map->s_rot.y_angle == 0 && \
-	s_map->s_rot.z_angle == 0)
-			s_map->z_sc += 0.2;
-	else if (ydelta > 0)
+	t_map	*s_map;
+
+	s_map = (t_map *)param;
+	if (ydelta > 0)
 		s_map->sc += 1;
-	if (ydelta < 0 && mlx_is_key_down(s_map->window, MLX_KEY_H) && \
-	s_map->s_rot.x_angle == 0 && s_map->s_rot.y_angle == 0 && \
-		s_map->s_rot.z_angle == 0)
-			s_map->z_sc -= 0.2;
-	else if (ydelta < 0)
+	if (ydelta < 0)
 	{
 		s_map->sc -= 1;
 		if (s_map->sc < 1)
 			s_map->sc = 1;
 	}
+	if (xdelta > 0 && s_map->s_rot.x_angle == 0 && s_map->s_rot.y_angle == 0 \
+	&& s_map->s_rot.z_angle == 0)
+		s_map->z_sc += 0.2;
+	if (xdelta < 0 && s_map->s_rot.x_angle == 0 && s_map->s_rot.y_angle == 0 \
+	&& s_map->s_rot.z_angle == 0)
+		s_map->z_sc -= 0.2;
 	draw_all(&ft_iso_rot, s_map);
 }

@@ -6,19 +6,22 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 22:02:48 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/18 21:03:29 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/23 23:51:00 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static int	**ft_map_resize(double **map, int y)
+static t_3d	**ft_map_resize(t_3d **map, int y)
 {
-	int	**new_map;
+	t_3d	**new_map;
 
 	new_map = malloc((y + ARRAY_SIZE) * sizeof(t_3d *));
 	if (!new_map)
-		return (ft_free_double_p(map, y));
+	{
+		ft_free_double_p(map, y);
+		return (NULL);
+	}
 	ft_memcpy(new_map, map, y * sizeof(t_3d *));
 	free(map);
 	return (new_map);
@@ -85,14 +88,14 @@ static char	*row_parse(int fd, char *str, t_map *s_map)
 	return (next_str);
 }
 
-t_map	*map_parse(int fd, t_map *s_map)
+t_3d	**map_parse(int fd, t_map *s_map)
 {
 	char	*str;
 
 	str = get_next_line(fd);
 	if (!str)
 		return (0);
-	s_map->mtrx = malloc(ARRAY_SIZE * sizeof(int *));
+	s_map->mtrx = malloc(ARRAY_SIZE * sizeof(t_3d *));
 	if (!s_map->mtrx)
 		return (free(str), NULL);
 	while (str)

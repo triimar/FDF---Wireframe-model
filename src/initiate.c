@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 18:54:29 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/22 22:17:59 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/24 01:15:05 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_initiate(t_map *s_map)
 
 static double	abs_bigger(double a, double b)
 {
-	if (abs(a) >= abs(b))
+	if (fabs(a) >= fabs(b))
 		return (a);
 	else
 		return (b);
@@ -51,20 +51,20 @@ double	default_scale(t_map *s_map)
 	double	width_sc;
 
 	if (s_map->x_max >= s_map->y_max)
-		width_sc = (WIDTH / 2 - 80) / (s_map->x_max - 1) * cos(M_PI / 6);
+		width_sc = (WIDTH / 3) / (s_map->x_max - 1) * cos(M_PI / 6);
 	else
-		width_sc = (WIDTH / 2 - 80) / (-1 - s_map->y_max) * cos(M_PI / 6);
+		width_sc = (WIDTH / 3) / (-1 - s_map->y_max) * cos(M_PI / 6);
 	max_h = (s_map->x_max + s_map->y_max - 2) * sin(M_PI / 6) - \
 	s_map->mtrx[s_map->y_max - 1][s_map->x_max - 1].pt_z;
-	if ((abs(s_map->pt_z_max->pt_z) >= abs(s_map->pt_z_min->pt_z)))
+	if ((fabs(s_map->pt_z_max->pt_z) >= fabs(s_map->pt_z_min->pt_z)))
 		pt_max_z = (s_map->pt_z_max->pt_x + s_map->pt_z_max->pt_y) \
-		* sin(M_PI / 6) - abs(s_map->pt_z_max->pt_z);
+		* sin(M_PI / 6) - fabs(s_map->pt_z_max->pt_z);
 	else
 		pt_max_z = (s_map->pt_z_min->pt_x + s_map->pt_z_min->pt_y) \
-		* sin(M_PI / 6) - abs(s_map->pt_z_min->pt_z);
+		* sin(M_PI / 6) - fabs(s_map->pt_z_min->pt_z);
 	max_h = abs_bigger(max_h, pt_max_z);
-	s_map->sc = (HEIGHT / 2 - 80) / max_h;
-	if (abs(width_sc) < abs(s_map->sc))
+	s_map->sc = (HEIGHT / 3) / max_h;
+	if (fabs(width_sc) < fabs(s_map->sc))
 		s_map->sc = width_sc;
 	if (s_map->sc < 1 && s_map->sc >= 0)
 		s_map->sc = 1;

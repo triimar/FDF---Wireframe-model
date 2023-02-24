@@ -6,24 +6,25 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 18:58:45 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/16 17:31:55 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/24 00:17:31 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-char	*ft_free_double_p(void **p_p, int len)
+char	*ft_free_double_p(t_3d **p_p, int len)
 {
 	int	i;
 
 	i = 0;
 	if (!p_p)
 		return (NULL);
-	while (p_p[i] && i < len)
+	while (i < len && p_p[i])
 	{
 		free(p_p[i]);
 		i++;
 	}
+	// free(p_p[i]);
 	free (p_p);
 	return (NULL);
 }
