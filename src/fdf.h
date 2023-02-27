@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:45:42 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/24 18:00:25 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/02/25 14:11:26 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # define ARRAY_SIZE 25
 # define WIDTH 1540
 # define HEIGHT 1028
-# define START_RGBA 0xEE0000FF
-# define END_RGBA 	0xFFFFFFFF
+# define START_RGBA 0x0000EEFF
+# define END_RGBA 	0xFFEE00FF
 
 # include <stdlib.h>
 # include <unistd.h>
