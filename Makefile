@@ -6,7 +6,7 @@
 #    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 13:04:13 by tmarts            #+#    #+#              #
-#    Updated: 2023/02/24 19:35:51 by tmarts           ###   ########.fr        #
+#    Updated: 2023/03/08 13:22:34 by tmarts           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LDFLAGS = -lm
 # LDFLAGS += -fsanitize=address -g3
 LIBMLX	= ./MLX42
 LIBFT	= ./libft
-HEADERS	= -I ./include -I $(LIBMLX)/include -I $(LIBFT)
+HEADERS	= -I ./include -I $(LIBMLX)/include/MLX42 -I $(LIBFT)
 LIBS	= -lglfw -L /Users/$(USER)/homebrew/Cellar/glfw/3.3.8/lib/ $(LIBMLX)/libmlx42.a $(LIBFT)/libft.a 
 SRC_DIR = ./src/
 SRCS	= $(addprefix $(SRC_DIR)/, \

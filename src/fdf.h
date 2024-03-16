@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:45:42 by tmarts            #+#    #+#             */
-/*   Updated: 2023/02/25 14:11:26 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/03/08 13:22:02 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <math.h>
-# include "../libft/libft.h"
+# include "libft.h"
 # include <fcntl.h>
-# include "../MLX42/include/MLX42/MLX42.h"
-# include "../MLX42/include/MLX42/MLX42_Input.h"
+# include "MLX42.h"
+# include "MLX42_Input.h"
 
 typedef struct s_3d {
 	double	pt_x;
